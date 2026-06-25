@@ -1,0 +1,27 @@
+manifest_content = """{
+  "name": "AFT.PDC",
+  "short_name": "AFT.PDC",
+  "description": "ระบบองค์การนักวิชาชีพในอนาคตแห่งประเทศไทย วิทยาลัยเทคโนโลยีผดุงเสนาบริหารธุรกิจ",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#FAFAFA",
+  "theme_color": "#9B1B30",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}"""
+
+with open('/mnt/data/fpo_pwa_v2/manifest.json', 'w', encoding='utf-8') as f:
+    f.write(manifest_content)

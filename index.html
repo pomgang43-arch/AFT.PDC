@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFT.PDC - อวท.</title>
+    <meta name="theme-color" content="#9B1B30">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        :root { --bg-color: #FAFAFA; --surface-color: #FFFFFF; --crimson-red: #9B1B30; --crimson-light: #C22A42; --gold: #D4AF37; --gold-light: #F3E5AB; --text-main: #333333; --text-muted: #888888; --input-bg: #F5F7F8; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { background-color: var(--bg-color); background-image: linear-gradient(rgba(155, 27, 48, 0.8), rgba(0, 0, 0, 0.9)), url('bg-meeting.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--text-main); font-family: 'Kanit', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px 0; overflow-x: hidden; }
+        
+        .aft-logo-img { width: 100%; height: 100%; object-fit: contain; padding: 5px; }
+        .app-container { width: 100%; max-width: 450px; position: relative; padding: 0 20px; margin: auto;}
+        .login-container, .register-container, .dashboard-container, .admin-container { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 45px 35px; border-radius: 30px; width: 100%; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); text-align: center; border: 1px solid rgba(212, 175, 55, 0.2); position: relative; overflow: hidden; margin: 20px 0; display: none;}
+        #loginBox { display: block; } 
+        .login-container::before, .register-container::before, .dashboard-container::before, .admin-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--crimson-red) 50%, var(--gold) 50%); }
+        .logo-box { width: 90px; height: 90px; background: linear-gradient(135deg, #FFF, var(--input-bg)); border-radius: 25px; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px auto; box-shadow: 0 8px 20px rgba(155, 27, 48, 0.1); border: 2px solid var(--gold-light); overflow: hidden; }
+        h1 { font-size: 26px; font-weight: 700; color: var(--crimson-red); margin-bottom: 5px;}
+        p.subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; font-weight: 300;}
+        
+        .input-group { position: relative; margin-bottom: 15px; }
+        .input-group i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #A0A0A0; font-size: 18px; }
+        input[type="text"], input[type="number"], input[type="date"], select, textarea { width: 100%; padding: 16px 16px 16px 50px; background-color: var(--input-bg); border: 2px solid transparent; border-radius: 18px; color: var(--text-main); font-size: 15px; outline: none; transition: 0.3s; font-family: 'Kanit', sans-serif; font-weight: 500; }
+        textarea { padding-left: 20px; height: 100px; resize: none; }
+        .input-half { width: 48%; display: inline-block; }
+        
+        .file-upload-box { background-color: var(--input-bg); border: 2px dashed #D0D0D0; border-radius: 18px; padding: 15px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
+        .file-upload-box:hover { border-color: var(--gold); background: #FFF; }
+        #previewImage, #previewAdmTeam { max-width: 80px; border-radius: 50%; margin-top: 10px; display: none; border: 2px solid var(--gold); }
+        .preview-gallery { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        .preview-gallery img { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 2px solid var(--gold-light); box-shadow: 0 4px 8px rgba(0,0,0,0.1);}
+        
+        .pending-card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #EEE; text-align: left; transition: 0.3s; flex-wrap: wrap;}
+        .pending-card:hover { border-color: var(--gold); transform: scale(1.02); }
+        .pending-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold-light); flex-shrink: 0; background: #FFF;}
+        .pending-info { flex-grow: 1; min-width: 150px;}
+        .pending-name { font-weight: 700; color: var(--crimson-red); font-size: 15px; }
+        .pending-detail { font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
+        .admin-select { padding: 6px; border-radius: 8px; border: 1px solid #CCC; font-family: 'Kanit'; font-size: 13px; outline: none; background: #F9F9F9; color: var(--text-main); }
+        
+        .btn-main { width: 100%; padding: 16px; background-color: var(--crimson-red); color: #FFFFFF; border: none; border-radius: 18px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 20px rgba(155, 27, 48, 0.25); margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; }
+        .btn-main:hover { background-color: var(--crimson-light); transform: translateY(-3px);}
+        .btn-secondary { background-color: var(--input-bg); color: var(--text-main); border: 1px solid #D0D0D0; box-shadow: none; }
+        .btn-disabled { background-color: #D0D0D0 !important; color: #888888 !important; box-shadow: none !important; cursor: not-allowed !important; transform: none !important; }
+        .btn-approve { background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 13px; display: flex; align-items: center; gap: 5px; }
+        .text-link { display: inline-block; margin-top: 20px; color: var(--crimson-red); font-size: 15px; font-weight: 500; text-decoration: none; border-bottom: 1px dashed transparent; cursor: pointer; transition: 0.3s; }
+        
+        #mainAppBox { display: none; width: 100%; max-width: 100%; background: rgba(250, 250, 250, 0.85); backdrop-filter: blur(15px); min-height: 100vh; position: relative; margin: 0 auto; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .app-header { background: var(--surface-color); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 2px solid var(--gold); }
+        .hamburger-btn { background: none; border: none; color: var(--crimson-red); font-size: 24px; cursor: pointer; display: block; }
+        .app-title { font-weight: 700; font-size: 20px; color: var(--crimson-red); display: flex; align-items: center; gap: 10px;}
+        
+        .sidebar { position: fixed; top: 0; left: -280px; width: 260px; height: 100%; background: var(--surface-color); z-index: 200; transition: left 0.3s ease; box-shadow: 5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .sidebar.active { left: 0; }
+        .sidebar-header { background: linear-gradient(135deg, var(--crimson-red), var(--crimson-light)); padding: 30px 20px; color: white; text-align: center; }
+        .sidebar-menu { list-style: none; padding: 10px 0; margin: 0; flex-grow: 1;}
+        .sidebar-menu li { padding: 15px 25px; border-bottom: 1px solid #F0F0F0; cursor: pointer; display: flex; align-items: center; gap: 15px; color: var(--text-main); font-weight: 500; transition: 0.2s; }
+        .sidebar-menu li:hover, .sidebar-menu li.active-menu { background: var(--input-bg); color: var(--crimson-red); border-left: 4px solid var(--gold); }
+        .sidebar-menu li i { color: var(--gold); font-size: 20px; width: 25px; text-align: center; }
+        .sidebar-footer { padding: 20px; text-align: center; border-top: 1px solid #F0F0F0; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 150; display: none; }
+        .overlay.active { display: block; }
+        
+        .app-content { padding: 20px; padding-bottom: 50px; width: 100%; flex-grow: 1; overflow-x: hidden;}
+        
+        @media (min-width: 992px) {
+            #mainAppBox { display: none; flex-direction: row; }
+            .app-header, .hamburger-btn, .overlay { display: none !important; } 
+            .sidebar { position: sticky; left: 0; top: 0; height: 100vh; flex-shrink: 0; }
+            .app-content { padding: 40px; max-width: none; } 
+            .feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; } 
+        }
+
+        .feed-card { position: relative; background: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid rgba(212,175,55,0.1); transition: 0.3s; display: flex; flex-direction: column;}
+        .feed-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+        .feed-img { width: 100%; height: 280px; object-fit: cover; }
+        .feed-body { padding: 20px; text-align: left; flex-grow: 1; display: flex; flex-direction: column;}
+        .feed-title { font-size: 18px; font-weight: 700; color: var(--crimson-red); margin-bottom: 10px; }
+        .feed-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 15px; flex-grow: 1;}
+        .btn-delete-feed { position: absolute; top: 15px; right: 15px; background: rgba(255,0,0,0.8); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: none; justify-content: center; align-items: center; z-index: 10;}
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-bottom: 10px; align-self: flex-start;}
+        .badge-mandatory { background: #FFEbee; color: #D32F2F; border: 1px solid #D32F2F; }
+        .badge-optional { background: #E8F5E9; color: #2E7D32; border: 1px solid #2E7D32; }
+        
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+        .team-card { position: relative; background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #EEE; transition: 0.3s; }
+        .team-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--gold); background: #FFF;}
+        .team-role { font-size: 13px; color: var(--crimson-red); font-weight: 600; }
+        
+        .form-container { display: none; width: 100%; max-width: 850px; margin: 20px auto; padding: 0 20px;}
+        .btn-close-form { background: var(--surface-color); color: var(--crimson-red); border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; margin-bottom: 15px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; }
+        .paper-a4 { background: white; color: black; padding: 50px 60px; border-radius: 8px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); font-family: 'Sarabun', serif; font-size: 16px; line-height: 2; text-align: left; }
+        .paper-a4 .form-ref { text-align: right; font-weight: bold; margin-bottom: 10px; }
+        .paper-a4 .form-title { text-align: center; font-weight: bold; font-size: 18px; margin-bottom: 20px; }
+        .form-row { display: flex; align-items: baseline; flex-wrap: wrap; margin-bottom: 5px; }
+        .dotted-input { border: none; border-bottom: 1px dotted black; background: transparent; font-family: 'Sarabun', serif; font-size: 16px; color: blue; outline: none; padding: 0 5px; text-align: center; flex-grow: 1; margin: 0 5px; transition: 0.3s; }
+        .dotted-short { width: 60px; flex-grow: 0; } .dotted-med { width: 150px; flex-grow: 0; }
+        
+        .admin-manage-section { background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #EAEAEA; margin-top: 25px; text-align: left;}
+        .admin-manage-section h3 { color: var(--crimson-red); margin-bottom: 15px; font-size: 18px; border-bottom: 2px solid var(--gold-light); padding-bottom: 5px;}
+
+        /* CSS โมดอลล้นจอ แก้ไขเรียบร้อย */
+        .modal-overlay-alert, .modal-overlay-detail { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 9999; padding: 20px; overflow-y: auto;}
+        .modal-box { background-color: var(--surface-color); padding: 35px 25px; border-radius: 25px; max-width: 320px; text-align: center; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); animation: popIn 0.4s ease; max-height: 90vh; overflow-y: auto;}
+        .modal-box-detail { max-width: 800px; width: 100%; padding: 30px; text-align: left; background: #FFF; max-height: 90vh; overflow-y: auto;} 
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .full-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .full-gallery img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; border: 2px solid #EEE; }
+        .btn-close { width: 100%; padding: 12px; background: var(--input-bg); border: none; border-radius: 15px; cursor: pointer; font-weight: 600; margin-top:15px; font-size: 15px; color: var(--text-main); transition: 0.3s; }
+        .btn-close:hover { background: var(--gold); color: white; transform: scale(1.05); }
+        
+        .summary-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        .summary-table th, .summary-table td { border: 1px solid #DDD; padding: 8px; text-align: center; }
+        .summary-table th { background: var(--crimson-red); color: white; }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="mainAuthContainer">
+        <div class="login-container" id="loginBox">
+            <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
+            <h1>AFT.PDC</h1>
+            <p class="subtitle">ระบบองค์การนักวิชาชีพในอนาคตแห่งประเทศไทย<br>วิทยาลัยเทคโนโลยีผดุงเสนาบริหารธุรกิจ</p>
+            <div class="input-group"><input type="number" id="loginStudentId" placeholder="รหัสนักศึกษา 4 หลัก..."><i class="fa-solid fa-id-card"></i></div>
+            <button class="btn-main" id="loginBtn" onclick="login()">เข้าสู่ระบบ</button>
+            <a class="text-link" onclick="toggleAuthView('register')">สมัครสมาชิกใหม่</a>
+        </div>
+
+        <div class="register-container" id="registerBox">
+            <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
+            <h1>สมัครสมาชิก</h1>
+            <div class="input-group"><input type="number" id="regStudentId" placeholder="รหัสนักศึกษา 4 หลัก"></div>
+            <div class="input-group"><input type="text" id="regName" placeholder="ชื่อ - นามสกุล"></div>
+            <div class="input-group"><select id="regDepartment"><option value="" disabled selected>สาขาวิชา</option><option value="สาขาการบัญชี">สาขาการบัญชี</option><option value="สาขาเทคโนโลยีธุรกิจดิจิทัล">สาขาเทคโนโลยีธุรกิจดิจิทัล</option></select></div>
+            <div style="display: flex; gap: 10px;">
+                <div class="input-group input-half"><select id="regGender"><option value="" disabled selected>เพศ</option><option value="ชาย">ชาย</option><option value="หญิง">หญิง</option></select></div>
+                <div class="input-group input-half"><select id="regLevel"><option value="" disabled selected>ชั้นปี</option><option value="ปวช.1">ปวช.1</option><option value="ปวช.2">ปวช.2</option><option value="ปวช.3">ปวช.3</option><option value="ปวส.1">ปวส.1</option><option value="ปวส.2">ปวส.2</option></select></div>
+            </div>
+            <div class="input-group"><input type="text" id="regClassroom" placeholder="ห้องเรียน (เช่น 1/1, 2/3)"></div>
+            <div class="file-upload-box" onclick="document.getElementById('regImage').click()">
+                <p>อัปโหลดรูปโปรไฟล์</p>
+                <input type="file" id="regImage" accept="image/*" style="display: none;" onchange="previewFile('regImage', 'previewImage')">
+                <img id="previewImage" src="">
+            </div>
+            <button class="btn-main" id="registerBtn" onclick="register()">ยืนยันสมัคร</button>
+            <a class="text-link" onclick="toggleAuthView('login')">กลับหน้าล็อกอิน</a>
+        </div>
+
+        <div class="dashboard-container" id="dashboardBox">
+            <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
+            <h1 style="font-size: 22px;">ยินดีต้อนรับสู่ อวท.</h1>
+            <p class="subtitle">กรุณากรอกใบสมัครเพื่อเปิดใช้งานระบบค่ะ</p>
+            <button class="btn-main" id="btnForm10" onclick="openForm('form10')">กรอกแบบ อวท. ๑๐</button>
+            <button class="btn-main" id="btnForm06" onclick="openForm('form06')">กรอกแบบ อวท. ๐๖</button>
+            <button class="btn-main btn-secondary" onclick="logout()" style="margin-top: 25px;">ออกจากระบบ</button>
+        </div>
+        
+        <div class="admin-container" id="adminBox" style="max-width: 600px;">
+            <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
+            <h1 style="font-size: 22px;">ระบบจัดการ (Admin)</h1>
+            <button class="btn-main" onclick="openAdminApproval()"><i class="fa-solid fa-user-shield"></i> จัดการสิทธิ์และตรวจสอบสมาชิก</button>
+            <button class="btn-main btn-secondary" onclick="enterMainAppAsAdmin()"><i class="fa-solid fa-eye"></i> ทะลุไปดูหน้าแอปพลิเคชันหลัก</button>
+            
+            <div class="admin-manage-section">
+                <h3><i class="fa-solid fa-bullhorn"></i> โพสต์กิจกรรมที่ผ่านมา (เลือกได้หลายรูป)</h3>
+                <div class="input-group"><input type="text" id="admFeedTitle" placeholder="หัวข้อกิจกรรม..."></div>
+                <div class="input-group"><textarea id="admFeedDesc" placeholder="รายละเอียดเนื้อหา..."></textarea></div>
+                <div class="file-upload-box" onclick="document.getElementById('admFeedImage').click()" style="text-align:center;">
+                    <p>คลิกเพื่อเลือกรูปภาพ (ลากคลุมได้หลายรูป)</p>
+                    <input type="file" id="admFeedImage" accept="image/*" multiple style="display: none;" onchange="previewAdmMultipleFeeds()">
+                    <div class="preview-gallery" id="previewGalleryBox"></div>
+                </div>
+                <button class="btn-main" id="btnUploadFeed" onclick="addNewFeed()" style="background:var(--gold);">โพสต์ขึ้นแอป</button>
+            </div>
+
+            <div class="admin-manage-section">
+                <h3><i class="fa-solid fa-calendar-plus"></i> เพิ่มกิจกรรมปฏิทินงานที่จะมาถึง</h3>
+                <div class="input-group"><input type="text" id="admActTitle" placeholder="ชื่อกิจกรรม..."></div>
+                <div class="input-group"><input type="text" id="admActTime" placeholder="วัน เวลา เช่น ศุกร์ที่ 28 มิ.ย. (13.00 น.)"></div>
+                <div class="input-group"><input type="text" id="admActLoc" placeholder="สถานที่จัดงาน..."></div>
+                <div class="input-group"><input type="date" id="admActDate" required></div>
+                <div class="input-group">
+                    <select id="admActBadge"><option value="badge-mandatory">กิจกรรมบังคับ</option><option value="badge-optional">กิจกรรมทั่วไป (เสรี)</option></select>
+                </div>
+                <button class="btn-main" id="btnUploadAct" onclick="addNewActivity()" style="background:var(--gold);">บันทึกปฏิทินงาน</button>
+            </div>
+
+            <div class="admin-manage-section">
+                <h3><i class="fa-solid fa-users"></i> เพิ่มคณะกรรมการ อวท.</h3>
+                <div class="input-group"><input type="text" id="admTeamName" placeholder="ชื่อ-นามสกุล..."></div>
+                <div class="input-group"><input type="text" id="admTeamRole" placeholder="ตำแหน่ง (เช่น นายกองค์การฯ)..."></div>
+                <div class="file-upload-box" onclick="document.getElementById('admTeamImage').click()" style="text-align:center;">
+                    <p>แนบรูปโปรไฟล์กรรมการ</p>
+                    <input type="file" id="admTeamImage" accept="image/*" style="display: none;" onchange="previewFile('admTeamImage', 'previewAdmTeam', 'team')">
+                    <img id="previewAdmTeam" src="">
+                </div>
+                <button class="btn-main" id="btnUploadTeam" onclick="addNewTeam()" style="background:var(--gold);">เพิ่มกรรมการ</button>
+            </div>
+
+            <div class="admin-manage-section">
+                <h3><i class="fa-solid fa-headset"></i> ตั้งค่าช่องทางติดต่อ</h3>
+                <div class="input-group"><input type="text" id="admContactLine" placeholder="LINE ID (เช่น @aft.pdc)"></div>
+                <div class="input-group"><input type="text" id="admContactPhone" placeholder="เบอร์โทรศัพท์ (เช่น 02-123-4567)"></div>
+                <button class="btn-main" id="btnSaveContact" onclick="saveContact()" style="background:var(--gold);">บันทึกข้อมูลติดต่อ</button>
+            </div>
+            <button class="btn-main btn-secondary" onclick="logout()" style="margin-top: 25px;">ออกจากระบบ</button>
+        </div>
+    </div>
+
+    <div class="form-container" id="adminApprovalBox" style="background: rgba(255,255,255,0.95); max-width: 650px; text-align: center; border-radius: 20px; padding: 30px;">
+        <button class="btn-close-form" onclick="closeAdminApproval()">กลับไปเมนูแอดมิน</button>
+        <div class="logo-box" style="margin: 0 auto;"><img src="fpo-logo.png" class="aft-logo-img"></div>
+        <h2 style="color: var(--crimson-red); margin-bottom: 20px;">จัดการข้อมูลผู้ใช้งาน</h2>
+        <div id="pendingListContainer"></div>
+    </div>
+
+    <div id="mainAppBox">
+        <div class="app-header">
+            <button class="hamburger-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div class="app-title"><img src="fpo-logo.png" style="height: 35px;">AFT.PDC</div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header"><img src="fpo-logo.png" style="height: 60px; margin-bottom: 10px; background: white; border-radius: 10px; padding: 5px;"><div>เมนูหลัก อวท.</div></div>
+            <ul class="sidebar-menu">
+                <li id="menu-today" onclick="switchMenu('today')"><i class="fa-solid fa-clock"></i> กิจกรรมวันนี้ <span id="todayBadge" style="background:red; color:white; border-radius:50%; padding:2px 8px; font-size:12px; display:none;">!</span></li>
+                <li id="menu-home" class="active-menu" onclick="switchMenu('home')"><i class="fa-solid fa-image"></i> กิจกรรมที่ผ่านมา</li>
+                <li id="menu-upcoming" onclick="switchMenu('upcoming')"><i class="fa-solid fa-calendar-check"></i> กิจกรรมที่จะเกิดขึ้น</li>
+                <li id="menu-team" onclick="switchMenu('team')"><i class="fa-solid fa-users"></i> คณะกรรมการ อวท.</li>
+                <li id="menu-contact" onclick="switchMenu('contact')"><i class="fa-solid fa-headset"></i> ติดต่อสอบถาม</li>
+                <li id="menu-admin-back" onclick="backToAdminPanel()" style="display:none; margin-top:20px; border-top:2px solid #EAEAEA;"><i class="fa-solid fa-user-shield"></i> กลับหน้าแอดมิน</li>
+            </ul>
+            <div class="sidebar-footer"><button class="btn-main btn-secondary" onclick="logout()">ออกจากระบบ</button></div>
+        </div>
+        <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <div class="app-content">
+            <div id="view-today" style="display: none;"><h2 style="color: var(--surface-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 20px;"><i class="fa-solid fa-fire"></i> กิจกรรมที่จัดขึ้นวันนี้</h2><div id="dynamicTodayContainer"></div></div>
+            <div id="view-home"><h2 style="color: var(--surface-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 20px;"><i class="fa-solid fa-clock-rotate-left"></i> กิจกรรมที่ผ่านมา</h2><div class="feed-grid" id="dynamicFeedContainer"></div></div>
+            <div id="view-upcoming" style="display: none;"><h2 style="color: var(--surface-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 20px;"><i class="fa-solid fa-calendar-days"></i> ปฏิทินกิจกรรม อวท.</h2><div id="dynamicActivityContainer"></div></div>
+            <div id="view-team" style="display: none;"><h2 style="color: var(--surface-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 20px; text-align: center;">คณะกรรมการ อวท.</h2><div class="team-grid" id="dynamicTeamContainer"></div></div>
+            <div id="view-contact" style="display: none;"><h2 style="color: var(--surface-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 20px;"><i class="fa-solid fa-phone"></i> ช่องทางการติดต่อ</h2><div class="feed-card" style="max-width: 500px; margin: 0 auto;"><div class="feed-body" style="text-align: center;" id="dynamicContactContainer"></div></div></div>
+        </div>
+    </div>
+
+    <div class="form-container" id="form10Box">
+        <button class="btn-close-form" onclick="closeForm()"><i class="fa-solid fa-arrow-left"></i> ย้อนกลับ</button>
+        <div class="paper-a4">
+            <div class="form-ref">แบบ อวท. ๑๐</div><div style="text-align: center; margin-bottom: 15px;"><img src="fpo-logo.png" style="height: 80px;"></div>
+            <div class="form-title">ใบสมัครสมาชิกองค์การนักวิชาชีพฯ<br>วิทยาลัยเทคโนโลยีผดุงเสนาบริหารธุรกิจ</div>
+            <div class="form-row">ข้าพเจ้า นาย / นางสาว<input type="text" id="f10_prefix" class="dotted-input">รหัส<input type="text" id="f10_studentId" class="dotted-input dotted-med" readonly></div>
+            <div class="form-row">สาขาวิชา<input type="text" id="f10_major" class="dotted-input">สาขางาน<input type="text" id="f10_minor" class="dotted-input">ชั้น<input type="text" id="f10_level" class="dotted-input dotted-short"></div>
+            <div class="form-row">เกิดวันที่<input type="text" id="f10_dob_d" class="dotted-input dotted-short">เดือน<input type="text" id="f10_dob_m" class="dotted-input dotted-med">พ.ศ.<input type="text" id="f10_dob_y" class="dotted-input dotted-short"></div>
+            <div class="form-row">บ้านเลขที่<input type="text" id="f10_houseNo" class="dotted-input dotted-short">หมู่ที่<input type="text" id="f10_moo" class="dotted-input dotted-short">ซอย<input type="text" id="f10_soi" class="dotted-input">ตำบล<input type="text" id="f10_subdistrict" class="dotted-input"></div>
+            <div class="form-row">อำเภอ<input type="text" id="f10_district" class="dotted-input">จังหวัด<input type="text" id="f10_province" class="dotted-input">รหัสปณ.<input type="text" id="f10_zipcode" class="dotted-input dotted-short"></div>
+            <div class="form-row">โทรศัพท์<input type="text" id="f10_phone" class="dotted-input dotted-med">ชื่อบิดา<input type="text" id="f10_father" class="dotted-input">ชื่อมารดา<input type="text" id="f10_mother" class="dotted-input"></div>
+            <button class="btn-main" id="btnSubmit10" onclick="submitForm10()">ส่งใบสมัคร</button>
+        </div>
+    </div>
+    <div class="form-container" id="form06Box">
+        <button class="btn-close-form" onclick="closeForm()"><i class="fa-solid fa-arrow-left"></i> ย้อนกลับ</button>
+        <div class="paper-a4">
+            <div class="form-ref">แบบ อวท. ๐๖</div><div style="text-align: center; margin-bottom: 15px;"><img src="fpo-logo.png" style="height: 80px;"></div>
+            <div class="form-title">ใบสมัครสมาชิกชมรมวิชาชีพ<input type="text" id="f06_clubName" class="dotted-input dotted-med"><br>วิทยาลัยเทคโนโลยีผดุงเสนาบริหารธุรกิจ</div>
+            <div class="form-row">ข้าพเจ้า นาย/นางสาว<input type="text" id="f06_prefix" class="dotted-input">เป็นนักศึกษา</div>
+            <div class="form-row">ชั้น<input type="text" id="f06_level" class="dotted-input dotted-short">รหัส<input type="text" id="f06_studentId" class="dotted-input dotted-med" readonly>สาขาวิชา<input type="text" id="f06_major" class="dotted-input">สาขางาน<input type="text" id="f06_minor" class="dotted-input"></div>
+            <div class="form-row">เกิดวันที่<input type="text" id="f06_dob_d" class="dotted-input dotted-short">เดือน<input type="text" id="f06_dob_m" class="dotted-input dotted-med">พ.ศ.<input type="text" id="f06_dob_y" class="dotted-input dotted-short"></div>
+            <div class="form-row">บ้านเลขที่<input type="text" id="f06_houseNo" class="dotted-input dotted-short">หมู่ที่<input type="text" id="f06_moo" class="dotted-input dotted-short">ซอย<input type="text" id="f06_soi" class="dotted-input">ตำบล<input type="text" id="f06_subdistrict" class="dotted-input"></div>
+            <div class="form-row">อำเภอ<input type="text" id="f06_district" class="dotted-input">จังหวัด<input type="text" id="f06_province" class="dotted-input">รหัสปณ.<input type="text" id="f06_zipcode" class="dotted-input dotted-short"></div>
+            <div class="form-row">โทรศัพท์<input type="text" id="f06_phone" class="dotted-input dotted-med">ชื่อบิดา<input type="text" id="f06_father" class="dotted-input">ชื่อมารดา<input type="text" id="f06_mother" class="dotted-input"></div>
+            <button class="btn-main" id="btnSubmit06" onclick="submitForm06()">ส่งใบสมัคร</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay-alert" id="myModal"><div class="modal-box"><i class="fa-solid fa-bell modal-icon" id="modalIcon"></i><h2 class="modal-title" id="modalTitle">แจ้งเตือน</h2><p class="modal-desc" id="modalDesc"></p><button class="btn-close" onclick="closeModal()">รับทราบ</button></div></div>
+    <div class="modal-overlay-detail" id="feedDetailModal"><div class="modal-box modal-box-detail"><h2 class="modal-title" id="fdTitle" style="border-bottom: 2px solid var(--gold-light); padding-bottom: 10px;"></h2><p class="modal-desc" id="fdDesc" style="white-space: pre-wrap; margin-top: 15px; color: var(--text-main);"></p><div class="full-gallery" id="fdGallery"></div><button class="btn-close" onclick="closeFeedDetail()">ปิดหน้าต่าง</button></div></div>
+    
+    <div class="modal-overlay-alert" id="scannerModal"><div class="modal-box" style="width: 100%; max-width: 400px;"><h2 class="modal-title">สแกน QR Code เช็คชื่อ</h2><div id="qr-reader" style="width:100%; min-height: 250px; border: 2px solid var(--gold); border-radius:15px; overflow:hidden;"></div><button class="btn-close" onclick="closeScanner()" style="margin-top:15px;">ยกเลิก / ปิดกล้อง</button></div></div>
+    <div class="modal-overlay-detail" id="summaryModal"><div class="modal-box modal-box-detail" style="max-width: 500px;"><h2 class="modal-title">สรุปยอดผู้เข้าร่วม</h2><div id="summaryContent" style="margin-top: 15px; text-align: center;">กำลังโหลดข้อมูล...</div><button class="btn-close" onclick="document.getElementById('summaryModal').style.display='none'">ปิดหน้าต่าง</button></div></div>
+<script>
+        // 🚨 นำ Web App URL มาใส่ตรงนี้ 🚨
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0xtIIZ8pwRLdQOTV3GqXBXQ11hl0nMp-mcAcUaSXv2fsJ60WvO59o2LyPxDThxJzE/exec";
+        
+        let userBase64 = "", userImgType = "", currentStudentId = "", userRole = "student"; 
+        let admFeedImagesArray = [], globalFeedsData = [];
+        let html5QrcodeScanner = null; let activeActivityId = "";
+
+        window.onload = function() { loadDynamicData(); };
+
+        async function loadDynamicData() {
+            try {
+                // โหลดกิจกรรมที่ผ่านมา
+                let feedRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getFeeds' }) }); let feedData = await feedRes.json();
+                const feedCon = document.getElementById('dynamicFeedContainer'); feedCon.innerHTML = '';
+                if(feedData.status === 'success' && feedData.data.length > 0) {
+                    globalFeedsData = feedData.data;
+                    feedData.data.forEach(f => {
+                        let shortDesc = f.desc.length > 90 ? f.desc.substring(0, 90) + "..." : f.desc;
+                        feedCon.innerHTML += `<div class="feed-card" id="feed-${f.id}"><button class="btn-delete-feed" onclick="deleteFeed('${f.id}')" style="display: ${userRole === 'admin' ? 'flex' : 'none'};"><i class="fa-solid fa-trash"></i></button><img src="${f.imgs[0]}" class="feed-img"><div class="feed-body"><div class="feed-title">${f.title}</div><div class="feed-desc">${shortDesc}</div><button class="btn-main btn-secondary" style="margin-top: auto;" onclick="openFeedDetail('${f.id}')">ดูรายละเอียดเพิ่มเติม</button></div></div>`;
+                    });
+                } else feedCon.innerHTML = '<p style="color:white;">ยังไม่มีกิจกรรมที่ผ่านมาในขณะนี้</p>';
+
+                // โหลดปฏิทิน และแยกกิจกรรมวันนี้
+                let actRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getActivities' }) }); let actData = await actRes.json();
+                const todayCon = document.getElementById('dynamicTodayContainer'); todayCon.innerHTML = '';
+                const upCon = document.getElementById('dynamicActivityContainer'); upCon.innerHTML = '';
+                let hasToday = false;
+
+                if(actData.status === 'success') {
+                    let today = new Date(); today.setHours(0,0,0,0);
+                    actData.data.forEach(a => {
+                        if(!a.actDate) return;
+                        let actD = new Date(a.actDate); actD.setHours(0,0,0,0);
+                        let badge = a.type === 'badge-mandatory' ? 'กิจกรรมบังคับ' : 'กิจกรรมทั่วไป (เสรี)';
+                        
+                        let actionBtns = '';
+                        if(userRole === 'admin' || userRole === 'teacher') {
+                            actionBtns = `<div style="display:flex; gap:10px; margin-top:10px;"><button class="btn-main" style="background:#00B900;" onclick="showAdminQR('${a.id}')"><i class="fa-solid fa-qrcode"></i> เปิด QR ให้สแกน</button><button class="btn-main" style="background:var(--gold);" onclick="viewSummary('${a.id}')"><i class="fa-solid fa-chart-pie"></i> สรุปยอด</button></div>`;
+                        } else if(a.type === 'badge-mandatory') {
+                            actionBtns = `<button class="btn-main" style="margin-top:10px;" onclick="openScanner('${a.id}')"><i class="fa-solid fa-camera"></i> สแกน QR เช็คชื่อ</button>`;
+                        }
+
+                        let cardHTML = `<div class="feed-card" style="max-width:600px;" id="act-${a.id}"><button class="btn-delete-feed" onclick="deleteActivity('${a.id}')" style="display: ${userRole === 'admin' ? 'flex' : 'none'};"><i class="fa-solid fa-trash"></i></button><div class="feed-body"><span class="badge ${a.type}">${badge}</span><div class="feed-title">${a.title}</div><div class="feed-desc"><i class="fa-solid fa-calendar"></i> ${a.time} | <i class="fa-solid fa-location-dot"></i> ${a.loc}</div>${actD.getTime() === today.getTime() ? actionBtns : ''}</div></div>`;
+
+                        if(actD.getTime() === today.getTime()) { todayCon.innerHTML += cardHTML; hasToday = true; }
+                        else if(actD.getTime() > today.getTime()) { upCon.innerHTML += cardHTML; }
+                    });
+                }
+                if(hasToday) document.getElementById('todayBadge').style.display = 'inline-block'; else todayCon.innerHTML = '<p style="color:white;">ไม่มีกิจกรรมพิเศษที่จัดในวันนี้ครับ</p>';
+
+                // โหลดกรรมการ
+                let teamRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getTeams' }) }); let teamData = await teamRes.json();
+                const teamCon = document.getElementById('dynamicTeamContainer'); teamCon.innerHTML = '';
+                if(teamData.status === 'success' && teamData.data.length > 0) {
+                    teamData.data.forEach(t => { teamCon.innerHTML += `<div class="team-card" id="team-${t.id}"><button class="btn-delete-feed" onclick="deleteTeam('${t.id}')" style="display: ${userRole === 'admin' ? 'flex' : 'none'}; top: 5px; right: 5px; width:25px; height:25px;"><i class="fa-solid fa-trash"></i></button><img src="${t.img}" class="team-img"><div style="font-weight: 700;">${t.name}</div><div class="team-role">${t.role}</div></div>`; });
+                } else teamCon.innerHTML = '<p style="color:white; width:100%; text-align:center;">ยังไม่มีข้อมูลกรรมการ</p>';
+
+                // โหลดติดต่อ
+                let contactRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getContact' }) }); let contactData = await contactRes.json();
+                if(contactData.status === 'success') {
+                    document.getElementById('dynamicContactContainer').innerHTML = `<button class="btn-main" style="background: #00B900; margin-bottom: 10px;" onclick="window.open('https://line.me/R/ti/p/${contactData.line.replace('@','')}')"><i class="fa-brands fa-line"></i> LINE Official: ${contactData.line}</button><button class="btn-main btn-secondary"><i class="fa-solid fa-phone"></i> โทร: ${contactData.phone}</button>`;
+                    document.getElementById('admContactLine').value = contactData.line; document.getElementById('admContactPhone').value = contactData.phone;
+                }
+            } catch(e) {}
+        }
+
+        // ================= QR Code & Summary =================
+        function openScanner(actId) {
+            activeActivityId = actId; document.getElementById('scannerModal').style.display = 'flex';
+            html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: {width: 250, height: 250} }, false);
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        }
+        function closeScanner() { document.getElementById('scannerModal').style.display = 'none'; if(html5QrcodeScanner) html5QrcodeScanner.clear(); }
+        
+        async function onScanSuccess(decodedText, decodedResult) {
+            closeScanner();
+            if(decodedText !== activeActivityId) return showModal("QR ไม่ถูกต้อง", "คิวอาร์โค้ดนี้ไม่ใช่ของกิจกรรมนี้ครับ", "error");
+            showModal("กำลังบันทึก...", "กำลังส่งข้อมูลเช็คชื่อ", "wait");
+            try {
+                let p = new URLSearchParams(); p.append('action', 'checkInActivity'); p.append('studentId', currentStudentId); p.append('actId', activeActivityId);
+                let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json();
+                if(d.status === 'success') showModal("เช็คชื่อสำเร็จ 🎉", d.message, "success"); else showModal("ผิดพลาด", d.message, "error");
+            } catch(e) { showModal("ล้มเหลว", "เชื่อมต่อไม่ได้", "error"); }
+        }
+        function onScanFailure(error) {}
+
+        function showAdminQR(actId) { let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${actId}`; showModal("QR Code เช็คชื่อ", `<img src="${qrUrl}" style="width:100%; border-radius:15px; margin-top:10px;">`, "success"); }
+        
+        async function viewSummary(actId) {
+            document.getElementById('summaryModal').style.display = 'flex'; document.getElementById('summaryContent').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังโหลด...';
+            try {
+                let p = new URLSearchParams(); p.append('action', 'getAttendanceSummary'); p.append('actId', actId);
+                let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json();
+                if(d.status === 'success') {
+                    let s = d.summary;
+                    let html = `<h3>รวม: <span style="color:red;">${s.total}</span> คน</h3><p>ชาย: ${s.male} | หญิง: ${s.female}</p><table class="summary-table"><tr><th>ระดับ/ห้อง</th><th>คน</th></tr>`;
+                    for(let r in s.rooms) { html += `<tr><td>${r}</td><td>${s.rooms[r]}</td></tr>`; }
+                    document.getElementById('summaryContent').innerHTML = html + `</table>`;
+                }
+            } catch(e) { document.getElementById('summaryContent').innerHTML = 'โหลดล้มเหลว'; }
+        }
+
+        // ================= Auth =================
+        function previewFile(inId, preId, t='user') { const f = document.getElementById(inId).files[0]; const p = document.getElementById(preId); const r = new FileReader(); r.onloadend=()=>{p.src=r.result; p.style.display='block'; let b=r.result.split(',')[1]; if(t==='user'){userBase64=b; userImgType=f.type;} else {teamBase64=b; teamImgType=f.type;} }; if(f) r.readAsDataURL(f); }
+
+        async function register() {
+            const id = document.getElementById('regStudentId').value, name = document.getElementById('regName').value, dep = document.getElementById('regDepartment').value, gen = document.getElementById('regGender').value, lvl = document.getElementById('regLevel').value, rm = document.getElementById('regClassroom').value, btn = document.getElementById('registerBtn');
+            if(!id||!name||!dep||!gen||!lvl||!rm||!userBase64) return showModal("ข้อมูลไม่ครบ", "กรอกให้ครบทุกช่อง", "error");
+            if(id.length!==4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error");
+            btn.disabled = true; btn.innerHTML = 'กำลังส่ง...';
+            try { let p = new URLSearchParams(); p.append('action','register'); p.append('studentId',id); p.append('name',name); p.append('department',dep); p.append('gender',gen); p.append('level',lvl); p.append('classroom',rm); p.append('imageFile',userBase64); p.append('imageType',userImgType); let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){showModal("สำเร็จ","รออนุมัติครับ","success"); setTimeout(()=>{toggleAuthView('login'); closeModal();},3000);} else showModal("ผิดพลาด",d.message,"error"); } catch(e){} btn.disabled = false; btn.innerHTML = 'ยืนยันสมัคร';
+        }
+
+        async function login() {
+            const id = document.getElementById('loginStudentId').value, btn = document.getElementById('loginBtn');
+            if(id.length!==4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error");
+            btn.disabled = true; btn.innerHTML = 'ตรวจสอบ...';
+            try { let p = new URLSearchParams(); p.append('action','login'); p.append('studentId',id); let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success') { currentStudentId = id; userRole = d.role; if(d.role==='admin'||d.role==='teacher'){ showModal("สวัสดี","แอดมิน","success"); setTimeout(()=>{closeModal();toggleAuthView('admin');},1500); } else if(d.userStatus==='pending'){ showModal("รออนุมัติ","รออาจารย์อนุมัติ","wait"); } else { document.getElementById('f10_studentId').value=id; document.getElementById('f06_studentId').value=id; if(d.hasForm10&&d.hasForm06){ showModal("สำเร็จ","ยินดีต้อนรับ","success"); setTimeout(()=>{closeModal();document.getElementById('mainAuthContainer').style.display='none'; document.getElementById('mainAppBox').style.display=(window.innerWidth>=992?'flex':'block'); loadDynamicData(); switchMenu('home');},1500); } else { if(d.hasForm10){document.getElementById('btnForm10').disabled=true; document.getElementById('btnForm10').innerText='ส่งแล้ว';} if(d.hasForm06){document.getElementById('btnForm06').disabled=true; document.getElementById('btnForm06').innerText='ส่งแล้ว';} showModal("กรอกฟอร์ม","โปรดกรอกฟอร์มให้ครบ","info"); setTimeout(()=>{closeModal();toggleAuthView('dashboard');},1500); } } } else showModal("ไม่พบข้อมูล", d.message, "error"); } catch(e){} btn.disabled = false; btn.innerHTML = 'เข้าสู่ระบบ';
+        }
+
+        // ================= PDF =================
+        async function submitForm10() {
+            let p = new URLSearchParams(); p.append('action', 'submitForm10'); p.append('studentId', currentStudentId); const fields = ['prefix','major','minor','level','dob_d','dob_m','dob_y','houseNo','soi','subdistrict','district','province','zipcode','phone']; for(let f of fields){ let v = document.getElementById('f10_'+f).value; if(!v) return showModal("ไม่ครบ", "กรอกให้ครบ", "error"); p.append(f==='prefix'?'prefix_name':f, v); } p.append('moo', document.getElementById('f10_moo').value||'-'); p.append('father', document.getElementById('f10_father').value||'-'); p.append('mother', document.getElementById('f10_mother').value||'-');
+            const btn = document.getElementById('btnSubmit10'); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...';
+            try { let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){ showModal("สำเร็จ","สร้างใบสมัคร ๑๐ แล้ว","success"); document.getElementById('btnForm10').disabled=true; document.getElementById('btnForm10').innerText='ส่งแล้ว'; setTimeout(()=>{closeModal();closeForm();},2000); } } catch(e){} btn.disabled = false; btn.innerHTML = 'ส่งใบสมัคร';
+        }
+        async function submitForm06() {
+            let p = new URLSearchParams(); p.append('action', 'submitForm06'); p.append('studentId', currentStudentId); const fields = ['clubName','prefix','level','major','minor','dob_d','dob_m','dob_y','houseNo','soi','subdistrict','district','province','zipcode','phone']; for(let f of fields){ let v = document.getElementById('f06_'+f).value; if(!v) return showModal("ไม่ครบ", "กรอกให้ครบ", "error"); p.append(f==='prefix'?'prefix_name':f, v); } p.append('moo', document.getElementById('f06_moo').value||'-'); p.append('father', document.getElementById('f06_father').value||'-'); p.append('mother', document.getElementById('f06_mother').value||'-');
+            const btn = document.getElementById('btnSubmit06'); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...';
+            try { let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){ showModal("สำเร็จ","สร้างใบสมัคร ๐๖ แล้ว","success"); document.getElementById('btnForm06').disabled=true; document.getElementById('btnForm06').innerText='ส่งแล้ว'; setTimeout(()=>{closeModal();closeForm();},2000); } } catch(e){} btn.disabled = false; btn.innerHTML = 'ส่งใบสมัคร';
+        }
+
+        // ================= Admin Panel =================
+        function previewAdmMultipleFeeds() { const files = document.getElementById('admFeedImage').files; const b = document.getElementById('previewGalleryBox'); b.innerHTML=''; admFeedImagesArray=[]; Array.from(files).forEach((f)=>{const r=new FileReader(); r.onloadend=()=>{b.innerHTML+=`<img src="${r.result}">`; admFeedImagesArray.push({base64:r.result.split(',')[1], type:f.type});}; if(f) r.readAsDataURL(f);}); }
+        async function addNewFeed() { const t = document.getElementById('admFeedTitle').value, d = document.getElementById('admFeedDesc').value, btn = document.getElementById('btnUploadFeed'); if(!t||!d||admFeedImagesArray.length===0) return showModal("ไม่ครบ","แนบรูปและข้อความ","error"); btn.disabled=true; btn.innerHTML='โหลด...'; try { let p = new URLSearchParams(); p.append('action','addFeed'); p.append('title',t); p.append('desc',d); p.append('imagesData',JSON.stringify(admFeedImagesArray)); await fetch(SCRIPT_URL, {method:'POST',body:p}); showModal("สำเร็จ","โพสต์แล้ว","success"); document.getElementById('admFeedTitle').value=''; document.getElementById('admFeedDesc').value=''; document.getElementById('previewGalleryBox').innerHTML=''; admFeedImagesArray=[]; loadDynamicData(); } catch(e){} btn.disabled=false; btn.innerHTML='โพสต์ขึ้นแอป'; }
+        async function addNewActivity() { const t=document.getElementById('admActTitle').value, tm=document.getElementById('admActTime').value, l=document.getElementById('admActLoc').value, ty=document.getElementById('admActBadge').value, dt=document.getElementById('admActDate').value, btn=document.getElementById('btnUploadAct'); if(!t||!tm||!l||!dt) return showModal("ไม่ครบ","ใส่วันที่ด้วย","error"); btn.disabled=true; btn.innerHTML='บันทึก...'; try { let p=new URLSearchParams(); p.append('action','addActivity'); p.append('title',t); p.append('time',tm); p.append('loc',l); p.append('type',ty); p.append('actDate',dt); await fetch(SCRIPT_URL, {method:'POST',body:p}); showModal("สำเร็จ","เพิ่มแล้ว","success"); loadDynamicData(); } catch(e){} btn.disabled=false; btn.innerHTML='บันทึกปฏิทินงาน'; }
+        async function addNewTeam() { const n=document.getElementById('admTeamName').value, r=document.getElementById('admTeamRole').value, btn=document.getElementById('btnUploadTeam'); if(!n||!r||!teamBase64) return showModal("ไม่ครบ","ใส่รูปด้วย","error"); btn.disabled=true; btn.innerHTML='เพิ่ม...'; try { let p=new URLSearchParams(); p.append('action','addTeam'); p.append('name',n); p.append('role',r); p.append('imageFile',teamBase64); p.append('imageType',teamImgType); await fetch(SCRIPT_URL, {method:'POST',body:p}); showModal("สำเร็จ","เพิ่มแล้ว","success"); document.getElementById('admTeamName').value=''; document.getElementById('admTeamRole').value=''; document.getElementById('previewAdmTeam').style.display='none'; loadDynamicData(); } catch(e){} btn.disabled=false; btn.innerHTML='เพิ่มกรรมการ'; }
+        async function saveContact() { const l=document.getElementById('admContactLine').value, ph=document.getElementById('admContactPhone').value, btn=document.getElementById('btnSaveContact'); btn.disabled=true; try { let p=new URLSearchParams(); p.append('action','updateContact'); p.append('line',l); p.append('phone',ph); await fetch(SCRIPT_URL, {method:'POST',body:p}); showModal("สำเร็จ","บันทึกแล้ว","success"); loadDynamicData(); } catch(e){} btn.disabled=false; }
+        
+        async function deleteFeed(id) { if(confirm("ลบกิจกรรม?")){ let p=new URLSearchParams(); p.append('action','deleteFeed'); p.append('id',id); await fetch(SCRIPT_URL,{method:'POST',body:p}); loadDynamicData(); } }
+        async function deleteActivity(id) { if(confirm("ลบปฏิทิน?")){ let p=new URLSearchParams(); p.append('action','deleteActivity'); p.append('id',id); await fetch(SCRIPT_URL,{method:'POST',body:p}); loadDynamicData(); } }
+        async function deleteTeam(id) { if(confirm("ลบกรรมการ?")){ let p=new URLSearchParams(); p.append('action','deleteTeam'); p.append('id',id); await fetch(SCRIPT_URL,{method:'POST',body:p}); loadDynamicData(); } }
+
+        function openAdminApproval() { document.getElementById('adminBox').style.display='none'; document.getElementById('adminApprovalBox').style.display='block'; fetchPendingUsers(); }
+        function closeAdminApproval() { document.getElementById('adminApprovalBox').style.display='none'; document.getElementById('adminBox').style.display='block'; }
+        async function fetchPendingUsers() { const con=document.getElementById('pendingListContainer'); con.innerHTML='โหลด...'; try { let p=new URLSearchParams(); p.append('action','getUsers'); let res=await fetch(SCRIPT_URL,{method:'POST',body:p}); let d=await res.json(); if(d.status==='success'){ if(d.data.length===0) return con.innerHTML='ไม่มีข้อมูล'; con.innerHTML=''; d.data.forEach(u=>{ let isP = u.status==='pending'?'color:red;':'color:green;'; con.innerHTML+=`<div class="pending-card" id="card-${u.studentId}"><img src="${u.imageUrl}" class="pending-img"><div class="pending-info"><div class="pending-name" style="${isP}">${u.name}</div><div class="pending-detail">รหัส: ${u.studentId} | ${u.department}</div><div style="display:flex; gap:8px;"><select id="role-${u.studentId}" class="admin-select"><option value="student" ${u.role==='student'?'selected':''}>นศ.</option><option value="teacher" ${u.role==='teacher'?'selected':''}>อ.</option><option value="admin" ${u.role==='admin'?'selected':''}>แอดมิน</option></select><select id="status-${u.studentId}" class="admin-select"><option value="pending" ${u.status==='pending'?'selected':''}>รอ</option><option value="approved" ${u.status==='approved'?'selected':''}>ผ่าน</option></select></div></div><button class="btn-approve" onclick="saveUser('${u.studentId}')">บันทึก</button></div>`; }); } } catch(e){} }
+        async function saveUser(id) { const btn=document.getElementById(`card-${id}`).querySelector('.btn-approve'); btn.disabled=true; try { let p=new URLSearchParams(); p.append('action','updateUser'); p.append('studentId',id); p.append('role',document.getElementById(`role-${id}`).value); p.append('userStatus',document.getElementById(`status-${id}`).value); await fetch(SCRIPT_URL,{method:'POST',body:p}); showModal("สำเร็จ","อัปเดตสิทธิ์แล้ว","success"); fetchPendingUsers(); } catch(e){} btn.disabled=false; }
+
+        function enterMainAppAsAdmin() { document.getElementById('mainAuthContainer').style.display='none'; document.getElementById('mainAppBox').style.display=(window.innerWidth>=992?'flex':'block'); document.getElementById('menu-admin-back').style.display='flex'; loadDynamicData(); switchMenu('home'); }
+        function backToAdminPanel() { document.getElementById('mainAppBox').style.display='none'; document.getElementById('mainAuthContainer').style.display='block'; toggleAuthView('admin'); }
+
+        // ================= UI Helpers =================
+        function toggleAuthView(v) { document.querySelectorAll('.login-container, .register-container, .dashboard-container, .admin-container').forEach(el=>el.style.display='none'); document.getElementById(v+'Box').style.display='block'; }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
+        function switchMenu(m) { document.querySelectorAll('#view-today,#view-home,#view-upcoming,#view-team,#view-contact').forEach(el=>el.style.display='none'); document.querySelectorAll('.sidebar-menu li').forEach(li=>li.classList.remove('active-menu')); document.getElementById('view-'+m).style.display='block'; document.getElementById('menu-'+m).classList.add('active-menu'); if(window.innerWidth<992) toggleSidebar(); window.scrollTo(0,0); }
+        function openForm(id) { document.getElementById('mainAuthContainer').style.display='none'; document.getElementById(id+'Box').style.display='block'; window.scrollTo(0,0); }
+        function closeForm() { document.querySelectorAll('.form-container').forEach(e=>e.style.display='none'); document.getElementById('mainAuthContainer').style.display='block'; }
+        function logout() { currentStudentId=""; userRole="student"; document.querySelectorAll('#mainAppBox, .form-container').forEach(e=>e.style.display='none'); document.getElementById('mainAuthContainer').style.display='block'; toggleAuthView('login'); document.getElementById('loginStudentId').value=''; }
+        function openFeedDetail(id) { let f=globalFeedsData.find(x=>x.id==id); if(f){document.getElementById('fdTitle').innerText=f.title; document.getElementById('fdDesc').innerText=f.desc; let g=document.getElementById('fdGallery'); g.innerHTML=''; f.imgs.forEach(i=>g.innerHTML+=`<img src="${i}" onclick="window.open('${i}','_blank')">`); document.getElementById('feedDetailModal').style.display='flex';} }
+        function closeFeedDetail() { document.getElementById('feedDetailModal').style.display='none'; }
+        function showModal(t,d,type='info') { document.getElementById('modalTitle').innerText=t; document.getElementById('modalDesc').innerText=d; document.getElementById('myModal').style.display='flex'; }
+        function closeModal() { document.getElementById('myModal').style.display='none'; }
+    </script>
+</body>
+</html>
