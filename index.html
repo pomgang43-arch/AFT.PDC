@@ -2,9 +2,17 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AFT.PDC - อวท.</title>
+    
     <meta name="theme-color" content="#9B1B30">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AFT.PDC">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="fpo-logo.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -104,7 +112,6 @@
         .admin-manage-section { background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #EAEAEA; margin-top: 25px; text-align: left;}
         .admin-manage-section h3 { color: var(--crimson-red); margin-bottom: 15px; font-size: 18px; border-bottom: 2px solid var(--gold-light); padding-bottom: 5px;}
 
-        /* CSS โมดอลล้นจอ แก้ไขเรียบร้อย */
         .modal-overlay-alert, .modal-overlay-detail { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 9999; padding: 20px; overflow-y: auto;}
         .modal-box { background-color: var(--surface-color); padding: 35px 25px; border-radius: 25px; max-width: 320px; text-align: center; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); animation: popIn 0.4s ease; max-height: 90vh; overflow-y: auto;}
         .modal-box-detail { max-width: 800px; width: 100%; padding: 30px; text-align: left; background: #FFF; max-height: 90vh; overflow-y: auto;} 
@@ -281,9 +288,18 @@
     
     <div class="modal-overlay-alert" id="scannerModal"><div class="modal-box" style="width: 100%; max-width: 400px;"><h2 class="modal-title">สแกน QR Code เช็คชื่อ</h2><div id="qr-reader" style="width:100%; min-height: 250px; border: 2px solid var(--gold); border-radius:15px; overflow:hidden;"></div><button class="btn-close" onclick="closeScanner()" style="margin-top:15px;">ยกเลิก / ปิดกล้อง</button></div></div>
     <div class="modal-overlay-detail" id="summaryModal"><div class="modal-box modal-box-detail" style="max-width: 500px;"><h2 class="modal-title">สรุปยอดผู้เข้าร่วม</h2><div id="summaryContent" style="margin-top: 15px; text-align: center;">กำลังโหลดข้อมูล...</div><button class="btn-close" onclick="document.getElementById('summaryModal').style.display='none'">ปิดหน้าต่าง</button></div></div>
-<script>
-        // 🚨 นำ Web App URL มาใส่ตรงนี้ 🚨
+    <script>
+        // 🚨 นำ Web App URL ของคุณมาใส่ตรงนี้ 🚨
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0xtIIZ8pwRLdQOTV3GqXBXQ11hl0nMp-mcAcUaSXv2fsJ60WvO59o2LyPxDThxJzE/exec";
+        
+        // 🌟 ลงทะเบียน Service Worker สำหรับ PWA 🌟
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker Registered successfully!'))
+                    .catch(err => console.log('Service Worker Registration failed:', err));
+            });
+        }
         
         let userBase64 = "", userImgType = "", currentStudentId = "", userRole = "student"; 
         let admFeedImagesArray = [], globalFeedsData = [];
