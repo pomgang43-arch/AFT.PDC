@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AFT.PDC - อวท.</title>
     
+    <!-- 🌟 PWA Meta Tags & Manifest 🌟 -->
     <meta name="theme-color" content="#9B1B30">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -128,6 +129,7 @@
 </head>
 <body>
     <div class="app-container" id="mainAuthContainer">
+        <!-- Login & Register & Dashboard (เหมือนเดิมเป๊ะ) -->
         <div class="login-container" id="loginBox">
             <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
             <h1>AFT.PDC</h1>
@@ -166,12 +168,14 @@
             <button class="btn-main btn-secondary" onclick="logout()" style="margin-top: 25px;">ออกจากระบบ</button>
         </div>
         
+        <!-- แอดมินคอนเทนเนอร์ (อัปเกรดมีฟีเจอร์เพิ่ม/เปิด/ปิด เลือกตั้ง) -->
         <div class="admin-container" id="adminBox" style="max-width: 600px;">
             <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
             <h1 style="font-size: 22px;">ระบบจัดการ (Admin)</h1>
             <button class="btn-main" onclick="openAdminApproval()"><i class="fa-solid fa-user-shield"></i> จัดการสิทธิ์และตรวจสอบสมาชิก</button>
             <button class="btn-main btn-secondary" onclick="enterMainAppAsAdmin()"><i class="fa-solid fa-eye"></i> ทะลุไปดูหน้าแอปพลิเคชันหลัก</button>
             
+            <!-- 🌟 แผงจัดการเลือกตั้งนายกองค์การฯ 🌟 -->
             <div class="admin-manage-section">
                 <h3><i class="fa-solid fa-check-to-slot"></i> จัดการเลือกตั้งนายกองค์การฯ</h3>
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
@@ -190,6 +194,7 @@
                 <button class="btn-main" id="btnUploadCand" onclick="addCandidate()" style="background:var(--crimson-red);">เพิ่มรายชื่อผู้สมัคร</button>
             </div>
 
+            <!-- ฟีเจอร์แอดมินอื่นๆ เหมือนเดิม -->
             <div class="admin-manage-section">
                 <h3><i class="fa-solid fa-bullhorn"></i> โพสต์กิจกรรมที่ผ่านมา (เลือกได้หลายรูป)</h3>
                 <div class="input-group"><input type="text" id="admFeedTitle" placeholder="หัวข้อกิจกรรม..."></div>
@@ -236,6 +241,7 @@
         </div>
     </div>
 
+    <!-- แผงอนุมัติผู้ใช้งาน -->
     <div class="form-container" id="adminApprovalBox" style="background: rgba(255,255,255,0.95); max-width: 650px; text-align: center; border-radius: 20px; padding: 30px;">
         <button class="btn-close-form" onclick="closeAdminApproval()">กลับไปเมนูแอดมิน</button>
         <div class="logo-box" style="margin: 0 auto;"><img src="fpo-logo.png" class="aft-logo-img"></div>
@@ -243,6 +249,7 @@
         <div id="pendingListContainer"></div>
     </div>
 
+    <!-- แอปหลักที่นักศึกษาใช้ -->
     <div id="mainAppBox">
         <div class="app-header">
             <button class="hamburger-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
@@ -253,6 +260,7 @@
             <div class="sidebar-header"><img src="fpo-logo.png" style="height: 60px; margin-bottom: 10px; background: white; border-radius: 10px; padding: 5px;"><div>เมนูหลัก อวท.</div></div>
             <ul class="sidebar-menu">
                 <li id="menu-today" onclick="switchMenu('today')"><i class="fa-solid fa-clock"></i> กิจกรรมวันนี้ <span id="todayBadge" style="background:red; color:white; border-radius:50%; padding:2px 8px; font-size:12px; display:none;">!</span></li>
+                <!-- 🌟 เพิ่มเมนู เลือกตั้ง อวท. 🌟 -->
                 <li id="menu-election" onclick="switchMenu('election')"><i class="fa-solid fa-check-to-slot"></i> เลือกตั้ง อวท.</li>
                 <li id="menu-home" class="active-menu" onclick="switchMenu('home')"><i class="fa-solid fa-image"></i> กิจกรรมที่ผ่านมา</li>
                 <li id="menu-upcoming" onclick="switchMenu('upcoming')"><i class="fa-solid fa-calendar-check"></i> กิจกรรมที่จะเกิดขึ้น</li>
@@ -265,12 +273,14 @@
         <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
         <div class="app-content">
+            <!-- 🌟 หน้าเลือกตั้ง 🌟 -->
             <div id="view-election" style="display: none;">
                 <h2 style="color: var(--surface-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 20px; text-align: center;"><i class="fa-solid fa-check-to-slot"></i> ลงคะแนนเลือกตั้งนายกองค์การฯ</h2>
                 <div id="electionStatusBanner" style="background: white; padding: 15px; border-radius: 15px; text-align: center; margin-bottom: 20px; font-weight: bold; color: var(--crimson-red); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">กำลังโหลดข้อมูลการเลือกตั้ง...</div>
                 <div class="team-grid" id="dynamicCandidateContainer"></div>
             </div>
 
+            <!-- หน้าอื่นๆ -->
             <div id="view-today" style="display: none;"><h2 style="color: var(--surface-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 20px;"><i class="fa-solid fa-fire"></i> กิจกรรมที่จัดขึ้นวันนี้</h2><div id="dynamicTodayContainer"></div></div>
             <div id="view-home"><h2 style="color: var(--surface-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 20px;"><i class="fa-solid fa-clock-rotate-left"></i> กิจกรรมที่ผ่านมา</h2><div class="feed-grid" id="dynamicFeedContainer"></div></div>
             <div id="view-upcoming" style="display: none;"><h2 style="color: var(--surface-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-bottom: 20px;"><i class="fa-solid fa-calendar-days"></i> ปฏิทินกิจกรรม อวท.</h2><div id="dynamicActivityContainer"></div></div>
@@ -279,6 +289,7 @@
         </div>
     </div>
 
+    <!-- ฟอร์ม 10 & 06 (เหมือนเดิมเป๊ะ) -->
     <div class="form-container" id="form10Box">
         <button class="btn-close-form" onclick="closeForm()"><i class="fa-solid fa-arrow-left"></i> ย้อนกลับ</button>
         <div class="paper-a4">
@@ -308,10 +319,14 @@
         </div>
     </div>
 
+    <!-- Modals ทั้งหมด (รวมสรุปผลเลือกตั้ง) -->
     <div class="modal-overlay-alert" id="myModal"><div class="modal-box"><i class="fa-solid fa-bell modal-icon" id="modalIcon"></i><h2 class="modal-title" id="modalTitle">แจ้งเตือน</h2><p class="modal-desc" id="modalDesc"></p><button class="btn-close" onclick="closeModal()">รับทราบ</button></div></div>
     <div class="modal-overlay-detail" id="feedDetailModal"><div class="modal-box modal-box-detail"><h2 class="modal-title" id="fdTitle" style="border-bottom: 2px solid var(--gold-light); padding-bottom: 10px;"></h2><p class="modal-desc" id="fdDesc" style="white-space: pre-wrap; margin-top: 15px; color: var(--text-main);"></p><div class="full-gallery" id="fdGallery"></div><button class="btn-close" onclick="closeFeedDetail()">ปิดหน้าต่าง</button></div></div>
+    
     <div class="modal-overlay-alert" id="scannerModal"><div class="modal-box" style="width: 100%; max-width: 400px;"><h2 class="modal-title">สแกน QR Code เช็คชื่อ</h2><div id="qr-reader" style="width:100%; min-height: 250px; border: 2px solid var(--gold); border-radius:15px; overflow:hidden;"></div><button class="btn-close" onclick="closeScanner()" style="margin-top:15px;">ยกเลิก / ปิดกล้อง</button></div></div>
     <div class="modal-overlay-detail" id="summaryModal"><div class="modal-box modal-box-detail" style="max-width: 500px;"><h2 class="modal-title">สรุปยอดผู้เข้าร่วม</h2><div id="summaryContent" style="margin-top: 15px; text-align: center;">กำลังโหลดข้อมูล...</div><button class="btn-close" onclick="document.getElementById('summaryModal').style.display='none'">ปิดหน้าต่าง</button></div></div>
+    
+    <!-- 🌟 Modal โชว์กราฟผลเลือกตั้ง -->
     <div class="modal-overlay-detail" id="electionModal"><div class="modal-box modal-box-detail" style="max-width: 500px;"><h2 class="modal-title"><i class="fa-solid fa-chart-column"></i> สรุปผลการเลือกตั้ง</h2><div id="electionResultsContent" style="margin-top: 15px; text-align: left;">กำลังโหลดผลคะแนน...</div><button class="btn-close" onclick="document.getElementById('electionModal').style.display='none'">ปิดหน้าต่าง</button></div></div>
     <script>
         // 🚨 นำ Web App URL ของคุณมาใส่ตรงนี้ 🚨
@@ -325,14 +340,16 @@
         let userBase64 = "", userImgType = "", currentStudentId = "", userRole = "student"; 
         let admFeedImagesArray = [], globalFeedsData = [];
         let html5QrcodeScanner = null; let activeActivityId = "";
-        let candBase64 = "", candImgType = "", currentElectionStatus = "CLOSED";
+        let candBase64 = "", candImgType = "", currentElectionStatus = "CLOSED"; // ตัวแปรสำหรับเลือกตั้ง
 
         window.onload = function() { loadDynamicData(); };
 
         async function loadDynamicData() {
             try {
+                // 1. โหลดข้อมูลเลือกตั้ง E-Voting
                 loadElectionData();
 
+                // 2. โหลดกิจกรรมที่ผ่านมา
                 let feedRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getFeeds' }) }); let feedData = await feedRes.json();
                 const feedCon = document.getElementById('dynamicFeedContainer'); feedCon.innerHTML = '';
                 if(feedData.status === 'success' && feedData.data.length > 0) {
@@ -343,6 +360,7 @@
                     });
                 } else feedCon.innerHTML = '<p style="color:white;">ยังไม่มีกิจกรรมที่ผ่านมาในขณะนี้</p>';
 
+                // 3. โหลดปฏิทิน และแยกกิจกรรมวันนี้
                 let actRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getActivities' }) }); let actData = await actRes.json();
                 const todayCon = document.getElementById('dynamicTodayContainer'); todayCon.innerHTML = '';
                 const upCon = document.getElementById('dynamicActivityContainer'); upCon.innerHTML = '';
@@ -370,12 +388,14 @@
                 }
                 if(hasToday) document.getElementById('todayBadge').style.display = 'inline-block'; else todayCon.innerHTML = '<p style="color:white;">ไม่มีกิจกรรมพิเศษที่จัดในวันนี้ครับ</p>';
 
+                // 4. โหลดกรรมการ
                 let teamRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getTeams' }) }); let teamData = await teamRes.json();
                 const teamCon = document.getElementById('dynamicTeamContainer'); teamCon.innerHTML = '';
                 if(teamData.status === 'success' && teamData.data.length > 0) {
                     teamData.data.forEach(t => { teamCon.innerHTML += `<div class="team-card" id="team-${t.id}"><button class="btn-delete-feed" onclick="deleteTeam('${t.id}')" style="display: ${userRole === 'admin' ? 'flex' : 'none'}; top: 5px; right: 5px; width:25px; height:25px;"><i class="fa-solid fa-trash"></i></button><img src="${t.img}" class="team-img"><div style="font-weight: 700;">${t.name}</div><div class="team-role">${t.role}</div></div>`; });
                 } else teamCon.innerHTML = '<p style="color:white; width:100%; text-align:center;">ยังไม่มีข้อมูลกรรมการ</p>';
 
+                // 5. โหลดติดต่อ
                 let contactRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getContact' }) }); let contactData = await contactRes.json();
                 if(contactData.status === 'success') {
                     document.getElementById('dynamicContactContainer').innerHTML = `<button class="btn-main" style="background: #00B900; margin-bottom: 10px;" onclick="window.open('https://line.me/R/ti/p/${contactData.line.replace('@','')}')"><i class="fa-brands fa-line"></i> LINE Official: ${contactData.line}</button><button class="btn-main btn-secondary"><i class="fa-solid fa-phone"></i> โทร: ${contactData.phone}</button>`;
@@ -398,8 +418,8 @@
                         else { btnToggle.innerText = 'เปิดระบบลงคะแนน'; btnToggle.style.background = '#00B900'; }
                     }
 
-                    if(d.myVote) { banner.innerHTML = `<i class="fa-solid fa-circle-check"></i> คุณได้ลงคะแนนให้ <b>เบอร์ ${d.myVote}</b> เรียบร้อยแล้ว`; banner.style.color = '#388E3C'; } 
-                    else if (currentElectionStatus === 'OPEN') { banner.innerHTML = `<i class="fa-solid fa-bullhorn"></i> เปิดหีบลงคะแนนแล้ว! (เลือก 1 เบอร์เท่านั้น)`; banner.style.color = 'var(--crimson-red)'; } 
+                    if(d.myVote) { banner.innerHTML = `<i class="fa-solid fa-circle-check"></i> คุณได้ลงคะแนนให้ <b>เบอร์ ${d.myVote}</b> เรียบร้อยแล้ว (ขอบคุณที่ใช้สิทธิ์ครับ)`; banner.style.color = '#388E3C'; } 
+                    else if (currentElectionStatus === 'OPEN') { banner.innerHTML = `<i class="fa-solid fa-bullhorn"></i> เปิดหีบลงคะแนนแล้ว! (กรุณาเลือก 1 เบอร์เท่านั้น)`; banner.style.color = 'var(--crimson-red)'; } 
                     else { banner.innerHTML = `<i class="fa-solid fa-lock"></i> ระบบลงคะแนนยังไม่เปิด หรือ ปิดหีบเลือกตั้งแล้ว`; banner.style.color = '#888'; }
 
                     const candCon = document.getElementById('dynamicCandidateContainer'); candCon.innerHTML = '';
@@ -419,7 +439,7 @@
         }
 
         async function castVote(number, name) {
-            if(confirm(`ยืนยันการลงคะแนนให้ เบอร์ ${number} (${name}) ใช่หรือไม่?\n(คำเตือน: ลงคะแนนแล้วจะไม่สามารถแก้ไขได้!)`)) {
+            if(confirm(`ยืนยันการลงคะแนนให้ เบอร์ ${number} (${name}) ใช่หรือไม่?\n(คำเตือน: ลงคะแนนแล้วจะไม่สามารถแก้ไขหรือเปลี่ยนใจได้!)`)) {
                 showModal("กำลังบันทึก...", "กำลังส่งผลโหวตลงหีบ", "wait");
                 try {
                     let p = new URLSearchParams(); p.append('action', 'submitVote'); p.append('studentId', currentStudentId); p.append('candidateNumber', number);
@@ -468,7 +488,7 @@
             } catch(e){ document.getElementById('electionResultsContent').innerHTML = 'ดึงข้อมูลล้มเหลว'; }
         }
 
-        // ================= ฟังก์ชันพื้นฐานอื่นๆ =================
+        // ================= QR Code เช็คชื่อ (เหมือนเดิม) =================
         function openScanner(actId) { activeActivityId = actId; document.getElementById('scannerModal').style.display = 'flex'; html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: {width: 250, height: 250} }, false); html5QrcodeScanner.render(onScanSuccess, onScanFailure); }
         function closeScanner() { document.getElementById('scannerModal').style.display = 'none'; if(html5QrcodeScanner) html5QrcodeScanner.clear(); }
         async function onScanSuccess(decodedText, decodedResult) { closeScanner(); if(decodedText !== activeActivityId) return showModal("QR ไม่ถูกต้อง", "คิวอาร์โค้ดนี้ไม่ใช่ของกิจกรรมนี้ครับ", "error"); showModal("กำลังบันทึก...", "กำลังส่งข้อมูลเช็คชื่อ", "wait"); try { let p = new URLSearchParams(); p.append('action', 'checkInActivity'); p.append('studentId', currentStudentId); p.append('actId', activeActivityId); let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json(); if(d.status === 'success') showModal("เช็คชื่อสำเร็จ 🎉", d.message, "success"); else showModal("ผิดพลาด", d.message, "error"); } catch(e) { showModal("ล้มเหลว", "เชื่อมต่อไม่ได้", "error"); } }
@@ -476,14 +496,17 @@
         function showAdminQR(actId) { let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${actId}`; showModal("QR Code เช็คชื่อ", `<img src="${qrUrl}" style="width:100%; border-radius:15px; margin-top:10px;">`, "success"); }
         async function viewSummary(actId) { document.getElementById('summaryModal').style.display = 'flex'; document.getElementById('summaryContent').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; try { let p = new URLSearchParams(); p.append('action', 'getAttendanceSummary'); p.append('actId', actId); let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json(); if(d.status === 'success') { let s = d.summary; let html = `<h3>รวม: <span style="color:red;">${s.total}</span> คน</h3><p>ชาย: ${s.male} | หญิง: ${s.female}</p><table class="summary-table"><tr><th>ระดับ/ห้อง</th><th>คน</th></tr>`; for(let r in s.rooms) { html += `<tr><td>${r}</td><td>${s.rooms[r]}</td></tr>`; } document.getElementById('summaryContent').innerHTML = html + `</table>`; } } catch(e) { document.getElementById('summaryContent').innerHTML = 'โหลดล้มเหลว'; } }
 
+        // ================= Auth & Upload Helpers =================
         function previewFile(inId, preId, t='user') { const f = document.getElementById(inId).files[0]; const p = document.getElementById(preId); const r = new FileReader(); r.onloadend=()=>{p.src=r.result; p.style.display='block'; let b=r.result.split(',')[1]; if(t==='user'){userBase64=b; userImgType=f.type;} else if(t==='team'){teamBase64=b; teamImgType=f.type;} else if(t==='cand'){candBase64=b; candImgType=f.type;} }; if(f) r.readAsDataURL(f); }
 
         async function register() { const id = document.getElementById('regStudentId').value, name = document.getElementById('regName').value, dep = document.getElementById('regDepartment').value, gen = document.getElementById('regGender').value, lvl = document.getElementById('regLevel').value, rm = document.getElementById('regClassroom').value, btn = document.getElementById('registerBtn'); if(!id||!name||!dep||!gen||!lvl||!rm||!userBase64) return showModal("ข้อมูลไม่ครบ", "กรอกให้ครบทุกช่อง", "error"); if(id.length!==4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error"); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...'; try { let p = new URLSearchParams(); p.append('action','register'); p.append('studentId',id); p.append('name',name); p.append('department',dep); p.append('gender',gen); p.append('level',lvl); p.append('classroom',rm); p.append('imageFile',userBase64); p.append('imageType',userImgType); let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){showModal("สำเร็จ","รออนุมัติครับ","success"); setTimeout(()=>{toggleAuthView('login'); closeModal();},3000);} else showModal("ผิดพลาด",d.message,"error"); } catch(e){} btn.disabled = false; btn.innerHTML = 'ยืนยันสมัคร'; }
         async function login() { const id = document.getElementById('loginStudentId').value, btn = document.getElementById('loginBtn'); if(id.length!==4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error"); btn.disabled = true; btn.innerHTML = 'ตรวจสอบ...'; try { let p = new URLSearchParams(); p.append('action','login'); p.append('studentId',id); let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success') { currentStudentId = id; userRole = d.role; if(d.role==='admin'||d.role==='teacher'){ showModal("สวัสดี","แอดมิน","success"); setTimeout(()=>{closeModal();toggleAuthView('admin'); loadDynamicData();},1500); } else if(d.userStatus==='pending'){ showModal("รออนุมัติ","รออาจารย์อนุมัติ","wait"); } else { document.getElementById('f10_studentId').value=id; document.getElementById('f06_studentId').value=id; if(d.hasForm10&&d.hasForm06){ showModal("สำเร็จ","ยินดีต้อนรับ","success"); setTimeout(()=>{closeModal();document.getElementById('mainAuthContainer').style.display='none'; document.getElementById('mainAppBox').style.display=(window.innerWidth>=992?'flex':'block'); loadDynamicData(); switchMenu('home');},1500); } else { if(d.hasForm10){document.getElementById('btnForm10').disabled=true; document.getElementById('btnForm10').innerText='ส่งแล้ว';} if(d.hasForm06){document.getElementById('btnForm06').disabled=true; document.getElementById('btnForm06').innerText='ส่งแล้ว';} showModal("กรอกฟอร์ม","โปรดกรอกฟอร์มให้ครบ","info"); setTimeout(()=>{closeModal();toggleAuthView('dashboard');},1500); } } } else showModal("ไม่พบข้อมูล", d.message, "error"); } catch(e){} btn.disabled = false; btn.innerHTML = 'เข้าสู่ระบบ'; }
 
+        // ================= PDF =================
         async function submitForm10() { let p = new URLSearchParams(); p.append('action', 'submitForm10'); p.append('studentId', currentStudentId); const fields = ['prefix','major','minor','level','dob_d','dob_m','dob_y','houseNo','soi','subdistrict','district','province','zipcode','phone']; for(let f of fields){ let v = document.getElementById('f10_'+f).value; if(!v) return showModal("ไม่ครบ", "กรอกให้ครบ", "error"); p.append(f==='prefix'?'prefix_name':f, v); } p.append('moo', document.getElementById('f10_moo').value||'-'); p.append('father', document.getElementById('f10_father').value||'-'); p.append('mother', document.getElementById('f10_mother').value||'-'); const btn = document.getElementById('btnSubmit10'); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...'; try { let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){ showModal("สำเร็จ","สร้างใบสมัคร ๑๐ แล้ว","success"); document.getElementById('btnForm10').disabled=true; document.getElementById('btnForm10').innerText='ส่งแล้ว'; setTimeout(()=>{closeModal();closeForm();},2000); } } catch(e){} btn.disabled = false; btn.innerHTML = 'ส่งใบสมัคร'; }
         async function submitForm06() { let p = new URLSearchParams(); p.append('action', 'submitForm06'); p.append('studentId', currentStudentId); const fields = ['clubName','prefix','level','major','minor','dob_d','dob_m','dob_y','houseNo','soi','subdistrict','district','province','zipcode','phone']; for(let f of fields){ let v = document.getElementById('f06_'+f).value; if(!v) return showModal("ไม่ครบ", "กรอกให้ครบ", "error"); p.append(f==='prefix'?'prefix_name':f, v); } p.append('moo', document.getElementById('f06_moo').value||'-'); p.append('father', document.getElementById('f06_father').value||'-'); p.append('mother', document.getElementById('f06_mother').value||'-'); const btn = document.getElementById('btnSubmit06'); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...'; try { let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){ showModal("สำเร็จ","สร้างใบสมัคร ๐๖ แล้ว","success"); document.getElementById('btnForm06').disabled=true; document.getElementById('btnForm06').innerText='ส่งแล้ว'; setTimeout(()=>{closeModal();closeForm();},2000); } } catch(e){} btn.disabled = false; btn.innerHTML = 'ส่งใบสมัคร'; }
 
+        // ================= Admin Panel ของเดิม =================
         function previewAdmMultipleFeeds() { const files = document.getElementById('admFeedImage').files; const b = document.getElementById('previewGalleryBox'); b.innerHTML=''; admFeedImagesArray=[]; Array.from(files).forEach((f)=>{const r=new FileReader(); r.onloadend=()=>{b.innerHTML+=`<img src="${r.result}">`; admFeedImagesArray.push({base64:r.result.split(',')[1], type:f.type});}; if(f) r.readAsDataURL(f);}); }
         async function addNewFeed() { const t = document.getElementById('admFeedTitle').value, d = document.getElementById('admFeedDesc').value, btn = document.getElementById('btnUploadFeed'); if(!t||!d||admFeedImagesArray.length===0) return showModal("ไม่ครบ","แนบรูปและข้อความ","error"); btn.disabled=true; btn.innerHTML='โหลด...'; try { let p = new URLSearchParams(); p.append('action','addFeed'); p.append('title',t); p.append('desc',d); p.append('imagesData',JSON.stringify(admFeedImagesArray)); await fetch(SCRIPT_URL, {method:'POST',body:p}); showModal("สำเร็จ","โพสต์แล้ว","success"); document.getElementById('admFeedTitle').value=''; document.getElementById('admFeedDesc').value=''; document.getElementById('previewGalleryBox').innerHTML=''; admFeedImagesArray=[]; loadDynamicData(); } catch(e){} btn.disabled=false; btn.innerHTML='โพสต์ขึ้นแอป'; }
         async function addNewActivity() { const t=document.getElementById('admActTitle').value, tm=document.getElementById('admActTime').value, l=document.getElementById('admActLoc').value, ty=document.getElementById('admActBadge').value, dt=document.getElementById('admActDate').value, btn=document.getElementById('btnUploadAct'); if(!t||!tm||!l||!dt) return showModal("ไม่ครบ","ใส่วันที่ด้วย","error"); btn.disabled=true; btn.innerHTML='บันทึก...'; try { let p=new URLSearchParams(); p.append('action','addActivity'); p.append('title',t); p.append('time',tm); p.append('loc',l); p.append('type',ty); p.append('actDate',dt); await fetch(SCRIPT_URL, {method:'POST',body:p}); showModal("สำเร็จ","เพิ่มแล้ว","success"); loadDynamicData(); } catch(e){} btn.disabled=false; btn.innerHTML='บันทึกปฏิทินงาน'; }
@@ -492,7 +515,7 @@
         
         async function deleteFeed(id) { if(confirm("ลบกิจกรรม?")){ let p=new URLSearchParams(); p.append('action','deleteFeed'); p.append('id',id); await fetch(SCRIPT_URL,{method:'POST',body:p}); loadDynamicData(); } }
         async function deleteActivity(id) { if(confirm("ลบปฏิทิน?")){ let p=new URLSearchParams(); p.append('action','deleteActivity'); p.append('id',id); await fetch(SCRIPT_URL,{method:'POST',body:p}); loadDynamicData(); } }
-        async function deleteTeam(id) { if(confirm("ลบกรรมการ?")){ let p=new URLSearchParams(); p.append('action','deleteTeam'); p.append('id',id); await fetch(SCRIPT_URL,{method:'POST',body:p}); loadDynamicData(); } }
+        async function deleteTeam(id) { if(confirm("ลบกรรมการ?")){ let p=newSearchParams(); p.append('action','deleteTeam'); p.append('id',id); await fetch(SCRIPT_URL,{method:'POST',body:p}); loadDynamicData(); } }
 
         function openAdminApproval() { document.getElementById('adminBox').style.display='none'; document.getElementById('adminApprovalBox').style.display='block'; fetchPendingUsers(); }
         function closeAdminApproval() { document.getElementById('adminApprovalBox').style.display='none'; document.getElementById('adminBox').style.display='block'; }
@@ -502,6 +525,7 @@
         function enterMainAppAsAdmin() { document.getElementById('mainAuthContainer').style.display='none'; document.getElementById('mainAppBox').style.display=(window.innerWidth>=992?'flex':'block'); document.getElementById('menu-admin-back').style.display='flex'; loadDynamicData(); switchMenu('home'); }
         function backToAdminPanel() { document.getElementById('mainAppBox').style.display='none'; document.getElementById('mainAuthContainer').style.display='block'; toggleAuthView('admin'); }
 
+        // ================= UI Helpers =================
         function toggleAuthView(v) { document.querySelectorAll('.login-container, .register-container, .dashboard-container, .admin-container').forEach(el=>el.style.display='none'); document.getElementById(v+'Box').style.display='block'; }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
         function switchMenu(m) { document.querySelectorAll('#view-election,#view-today,#view-home,#view-upcoming,#view-team,#view-contact').forEach(el=>el.style.display='none'); document.querySelectorAll('.sidebar-menu li').forEach(li=>li.classList.remove('active-menu')); document.getElementById('view-'+m).style.display='block'; document.getElementById('menu-'+m).classList.add('active-menu'); if(window.innerWidth<992) toggleSidebar(); window.scrollTo(0,0); if(m==='election') loadElectionData(); }
