@@ -466,6 +466,7 @@
                         d.candidates.forEach(c => {
                             let actionBtn = '';
                             if(currentElectionStatus === 'OPEN' && !d.myVote && userRole === 'student') {
+                                // เปลี่ยนบรรทัดนี้ในฟังก์ชัน loadElectionData ใน index.html
                                 actionBtn = `<button class="btn-main" style="padding:10px; font-size:15px; margin-top:15px; background:#00B900;" onclick="castVote('${c.number}', '${c.name}')"><i class="fa-solid fa-check-to-slot"></i> กาเบอร์ ${c.number}</button>`;
                             }
                             let delBtn = userRole === 'admin' ? `<button class="btn-delete-feed" onclick="deleteCandidate('${c.id}')" style="display:flex; top:5px; right:5px; width:25px; height:25px;"><i class="fa-solid fa-trash"></i></button>` : '';
