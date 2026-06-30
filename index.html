@@ -612,39 +612,50 @@
         }
 
         async function login() { 
-            const id = document.getElementById('loginStudentId').value;
-            const btn = document.getElementById('loginBtn'); 
+    const id = document.getElementById('loginStudentId').value;
+    const btn = document.getElementById('loginBtn'); 
+    
+    if(id.length !== 4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error"); 
+    btn.disabled = true; btn.innerHTML = 'ตรวจสอบ...'; 
+    
+    try { 
+        let p = new URLSearchParams(); p.append('action','login'); p.append('studentId',id); 
+        let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); 
+        let d = await res.json(); 
+        
+        if(d.status === 'success') { 
+            currentStudentId = id; 
+            userRole = d.role; // ข้อมูลสิทธิ์ที่ได้มาจาก Google Sheets โดยตรง
             
-            if(id.length !== 4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error"); 
-            btn.disabled = true; btn.innerHTML = 'ตรวจสอบ...'; 
-            
-            try { 
-                let p = new URLSearchParams(); p.append('action','login'); p.append('studentId',id); 
-                let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); 
-                
-                if(d.status === 'success') { 
-                    currentStudentId = id; userRole = d.role; 
-                    if(d.role === 'admin' || d.role === 'teacher'){ 
-                        showModal("สวัสดี","แอดมิน","success"); 
-                        setTimeout(()=>{closeModal();toggleAuthView('admin'); loadDynamicData();},1500); 
-                    } else if(d.userStatus === 'pending'){ 
-                        showModal("รออนุมัติ","รออาจารย์อนุมัติ","wait"); 
-                    } else { 
-                        document.getElementById('f10_studentId').value = id; 
-                        document.getElementById('f06_studentId').value = id; 
-                        if(d.hasForm10 && d.hasForm06){ 
-                            showModal("สำเร็จ","ยินดีต้อนรับ","success"); 
-                            setTimeout(()=>{closeModal();document.getElementById('mainAuthContainer').style.display='none'; document.getElementById('mainAppBox').style.display=(window.innerWidth>=992?'flex':'block'); loadDynamicData(); switchMenu('home');},1500); 
-                        } else { 
-                            if(d.hasForm10){document.getElementById('btnForm10').disabled=true; document.getElementById('btnForm10').innerText='ส่งแล้ว';} 
-                            if(d.hasForm06){document.getElementById('btnForm06').disabled=true; document.getElementById('btnForm06').innerText='ส่งแล้ว';} 
-                            showModal("กรอกฟอร์ม","โปรดกรอกฟอร์มให้ครบ","info"); setTimeout(()=>{closeModal();toggleAuthView('dashboard');},1500); 
-                        } 
-                    } 
-                } else showModal("ไม่พบข้อมูล", d.message, "error"); 
-            } catch(e){} 
-            btn.disabled = false; btn.innerHTML = 'เข้าสู่ระบบ'; 
-        }
+            // 🚨 แก้ไขจุดนี้: แยกทางเดินให้ชัดเจน 🚨
+            if(d.role === 'admin' || d.role === 'teacher') {
+                showModal("สวัสดีแอดมิน", "กำลังเข้าสู่ระบบจัดการ", "success");
+                setTimeout(()=>{
+                    closeModal();
+                    document.getElementById('mainAuthContainer').style.display='none';
+                    document.getElementById('adminBox').style.display='block'; // บังคับเข้าหน้าแอดมิน
+                    loadDynamicData();
+                }, 1500);
+            } else if(d.userStatus === 'pending'){ 
+                showModal("รออนุมัติ", "รออาจารย์อนุมัติสิทธิ์ครับ", "wait"); 
+            } else { 
+                // หน้าสำหรับนักศึกษาปกติ
+                document.getElementById('f10_studentId').value=id; 
+                document.getElementById('f06_studentId').value=id;
+                // ... (โค้ดเช็คฟอร์มเดิมของคุณ) ...
+                showModal("สำเร็จ", "ยินดีต้อนรับ", "success");
+                setTimeout(()=>{
+                    closeModal();
+                    document.getElementById('mainAuthContainer').style.display='none';
+                    document.getElementById('mainAppBox').style.display=(window.innerWidth>=992?'flex':'block');
+                    document.getElementById('adminBox').style.display='none'; // 👈 บังคับปิดหน้าแอดมินทิ้ง
+                    loadDynamicData(); switchMenu('home');
+                }, 1500);
+            } 
+        } else showModal("ไม่พบข้อมูล", d.message, "error"); 
+    } catch(e){} 
+    btn.disabled = false; btn.innerHTML = 'เข้าสู่ระบบ'; 
+}
 
         // ================= แบบฟอร์ม PDF =================
         async function submitForm10() { 
