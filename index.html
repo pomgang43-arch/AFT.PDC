@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AFT.PDC - อวท.</title>
     
+    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#9B1B30">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -128,6 +129,8 @@
 </head>
 <body>
     <div class="app-container" id="mainAuthContainer">
+        
+        <!-- หน้า Login -->
         <div class="login-container" id="loginBox">
             <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
             <h1>AFT.PDC</h1>
@@ -137,15 +140,37 @@
             <a class="text-link" onclick="toggleAuthView('register')">สมัครสมาชิกใหม่</a>
         </div>
 
+        <!-- หน้า Register -->
         <div class="register-container" id="registerBox">
             <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
             <h1>สมัครสมาชิก</h1>
             <div class="input-group"><input type="number" id="regStudentId" placeholder="รหัสนักศึกษา 4 หลัก"></div>
             <div class="input-group"><input type="text" id="regName" placeholder="ชื่อ - นามสกุล"></div>
-            <div class="input-group"><select id="regDepartment"><option value="" disabled selected>สาขาวิชา</option><option value="สาขาการบัญชี">สาขาการบัญชี</option><option value="สาขาเทคโนโลยีธุรกิจดิจิทัล">สาขาเทคโนโลยีธุรกิจดิจิทัล</option></select></div>
+            <div class="input-group">
+                <select id="regDepartment">
+                    <option value="" disabled selected>สาขาวิชา</option>
+                    <option value="สาขาการบัญชี">สาขาการบัญชี</option>
+                    <option value="สาขาเทคโนโลยีธุรกิจดิจิทัล">สาขาเทคโนโลยีธุรกิจดิจิทัล</option>
+                </select>
+            </div>
             <div style="display: flex; gap: 10px;">
-                <div class="input-group input-half"><select id="regGender"><option value="" disabled selected>เพศ</option><option value="ชาย">ชาย</option><option value="หญิง">หญิง</option></select></div>
-                <div class="input-group input-half"><select id="regLevel"><option value="" disabled selected>ชั้นปี</option><option value="ปวช.1">ปวช.1</option><option value="ปวช.2">ปวช.2</option><option value="ปวช.3">ปวช.3</option><option value="ปวส.1">ปวส.1</option><option value="ปวส.2">ปวส.2</option></select></div>
+                <div class="input-group input-half">
+                    <select id="regGender">
+                        <option value="" disabled selected>เพศ</option>
+                        <option value="ชาย">ชาย</option>
+                        <option value="หญิง">หญิง</option>
+                    </select>
+                </div>
+                <div class="input-group input-half">
+                    <select id="regLevel">
+                        <option value="" disabled selected>ชั้นปี</option>
+                        <option value="ปวช.1">ปวช.1</option>
+                        <option value="ปวช.2">ปวช.2</option>
+                        <option value="ปวช.3">ปวช.3</option>
+                        <option value="ปวส.1">ปวส.1</option>
+                        <option value="ปวส.2">ปวส.2</option>
+                    </select>
+                </div>
             </div>
             <div class="input-group"><input type="text" id="regClassroom" placeholder="ห้องเรียน (เช่น 1/1, 2/3)"></div>
             <div class="file-upload-box" onclick="document.getElementById('regImage').click()">
@@ -157,6 +182,7 @@
             <a class="text-link" onclick="toggleAuthView('login')">กลับหน้าล็อกอิน</a>
         </div>
 
+        <!-- หน้า Dashboard -->
         <div class="dashboard-container" id="dashboardBox">
             <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
             <h1 style="font-size: 22px;">ยินดีต้อนรับสู่ อวท.</h1>
@@ -166,6 +192,7 @@
             <button class="btn-main btn-secondary" onclick="logout()" style="margin-top: 25px;">ออกจากระบบ</button>
         </div>
         
+        <!-- แผงแอดมิน -->
         <div class="admin-container" id="adminBox" style="max-width: 600px;">
             <div class="logo-box"><img src="fpo-logo.png" class="aft-logo-img"></div>
             <h1 style="font-size: 22px;">ระบบจัดการ (Admin)</h1>
@@ -236,6 +263,7 @@
         </div>
     </div>
 
+    <!-- แผงจัดการสิทธิ์ (Admin Approval) -->
     <div class="form-container" id="adminApprovalBox" style="background: rgba(255,255,255,0.95); max-width: 650px; text-align: center; border-radius: 20px; padding: 30px;">
         <button class="btn-close-form" onclick="closeAdminApproval()">กลับไปเมนูแอดมิน</button>
         <div class="logo-box" style="margin: 0 auto;"><img src="fpo-logo.png" class="aft-logo-img"></div>
@@ -243,6 +271,7 @@
         <div id="pendingListContainer"></div>
     </div>
 
+    <!-- ตัวแอปพลิเคชันหลัก -->
     <div id="mainAppBox">
         <div class="app-header">
             <button class="hamburger-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
@@ -279,6 +308,7 @@
         </div>
     </div>
 
+    <!-- ฟอร์ม 10 & 06 (เอกสาร) -->
     <div class="form-container" id="form10Box">
         <button class="btn-close-form" onclick="closeForm()"><i class="fa-solid fa-arrow-left"></i> ย้อนกลับ</button>
         <div class="paper-a4">
@@ -308,6 +338,7 @@
         </div>
     </div>
 
+    <!-- กล่อง Modals เด้งแจ้งเตือนต่างๆ -->
     <div class="modal-overlay-alert" id="myModal"><div class="modal-box"><i class="fa-solid fa-bell modal-icon" id="modalIcon"></i><h2 class="modal-title" id="modalTitle">แจ้งเตือน</h2><p class="modal-desc" id="modalDesc"></p><button class="btn-close" onclick="closeModal()">รับทราบ</button></div></div>
     <div class="modal-overlay-detail" id="feedDetailModal"><div class="modal-box modal-box-detail"><h2 class="modal-title" id="fdTitle" style="border-bottom: 2px solid var(--gold-light); padding-bottom: 10px;"></h2><p class="modal-desc" id="fdDesc" style="white-space: pre-wrap; margin-top: 15px; color: var(--text-main);"></p><div class="full-gallery" id="fdGallery"></div><button class="btn-close" onclick="closeFeedDetail()">ปิดหน้าต่าง</button></div></div>
     
@@ -321,12 +352,14 @@
         
         // 🌟 ลงทะเบียน Service Worker สำหรับ PWA 🌟
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').then(reg => console.log('SW Registered')).catch(err => console.log('SW Error:', err)); });
+            window.addEventListener('load', () => { 
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Error:', err)); 
+            });
         }
         
         let userBase64 = "", userImgType = "", currentStudentId = "", userRole = "student"; 
         let admFeedImagesArray = [], globalFeedsData = [];
-        let html5QrcodeScanner = null; let activeActivityId = "";
+        let html5QrcodeScanner = null, activeActivityId = "";
         let candBase64 = "", candImgType = "", currentElectionStatus = "CLOSED";
 
         window.onload = function() { loadDynamicData(); };
@@ -336,8 +369,11 @@
             try {
                 loadElectionData();
 
-                let feedRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getFeeds' }) }); let feedData = await feedRes.json();
-                const feedCon = document.getElementById('dynamicFeedContainer'); feedCon.innerHTML = '';
+                let feedRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getFeeds' }) }); 
+                let feedData = await feedRes.json();
+                const feedCon = document.getElementById('dynamicFeedContainer'); 
+                feedCon.innerHTML = '';
+                
                 if(feedData.status === 'success' && feedData.data.length > 0) {
                     globalFeedsData = feedData.data;
                     feedData.data.forEach(f => {
@@ -346,7 +382,8 @@
                     });
                 } else feedCon.innerHTML = '<p style="color:white;">ยังไม่มีกิจกรรมที่ผ่านมาในขณะนี้</p>';
 
-                let actRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getActivities' }) }); let actData = await actRes.json();
+                let actRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getActivities' }) }); 
+                let actData = await actRes.json();
                 const todayCon = document.getElementById('dynamicTodayContainer'); todayCon.innerHTML = '';
                 const upCon = document.getElementById('dynamicActivityContainer'); upCon.innerHTML = '';
                 let hasToday = false;
@@ -371,39 +408,58 @@
                         else if(actD.getTime() > today.getTime()) { upCon.innerHTML += cardHTML; }
                     });
                 }
-                if(hasToday) document.getElementById('todayBadge').style.display = 'inline-block'; else todayCon.innerHTML = '<p style="color:white;">ไม่มีกิจกรรมพิเศษที่จัดในวันนี้ครับ</p>';
+                
+                if(hasToday) document.getElementById('todayBadge').style.display = 'inline-block'; 
+                else todayCon.innerHTML = '<p style="color:white;">ไม่มีกิจกรรมพิเศษที่จัดในวันนี้ครับ</p>';
 
-                let teamRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getTeams' }) }); let teamData = await teamRes.json();
+                let teamRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getTeams' }) }); 
+                let teamData = await teamRes.json();
                 const teamCon = document.getElementById('dynamicTeamContainer'); teamCon.innerHTML = '';
+                
                 if(teamData.status === 'success' && teamData.data.length > 0) {
                     teamData.data.forEach(t => { teamCon.innerHTML += `<div class="team-card" id="team-${t.id}"><button class="btn-delete-feed" onclick="deleteTeam('${t.id}')" style="display: ${userRole === 'admin' ? 'flex' : 'none'}; top: 5px; right: 5px; width:25px; height:25px;"><i class="fa-solid fa-trash"></i></button><img src="${t.img}" class="team-img"><div style="font-weight: 700;">${t.name}</div><div class="team-role">${t.role}</div></div>`; });
                 } else teamCon.innerHTML = '<p style="color:white; width:100%; text-align:center;">ยังไม่มีข้อมูลกรรมการ</p>';
 
-                let contactRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getContact' }) }); let contactData = await contactRes.json();
+                let contactRes = await fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams({ action: 'getContact' }) }); 
+                let contactData = await contactRes.json();
+                
                 if(contactData.status === 'success') {
                     document.getElementById('dynamicContactContainer').innerHTML = `<button class="btn-main" style="background: #00B900; margin-bottom: 10px;" onclick="window.open('https://line.me/R/ti/p/${contactData.line.replace('@','')}')"><i class="fa-brands fa-line"></i> LINE Official: ${contactData.line}</button><button class="btn-main btn-secondary"><i class="fa-solid fa-phone"></i> โทร: ${contactData.phone}</button>`;
-                    document.getElementById('admContactLine').value = contactData.line; document.getElementById('admContactPhone').value = contactData.phone;
+                    document.getElementById('admContactLine').value = contactData.line; 
+                    document.getElementById('admContactPhone').value = contactData.phone;
                 }
             } catch(e) {}
         }
 
-        // ================= 🌟 ระบบเลือกตั้ง (E-Voting) =================
+        // ================= 🌟 ระบบเลือกตั้ง (E-Voting) 🌟 =================
         async function loadElectionData() {
             try {
-                let p = new URLSearchParams(); p.append('action', 'getElectionData'); p.append('studentId', currentStudentId);
-                let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json();
+                let p = new URLSearchParams(); 
+                p.append('action', 'getElectionData'); 
+                p.append('studentId', currentStudentId);
+                let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); 
+                let d = await res.json();
+                
                 if(d.status === 'success') {
                     currentElectionStatus = d.electionStatus;
-                    let banner = document.getElementById('electionStatusBanner'); let btnToggle = document.getElementById('btnElectionToggle');
+                    let banner = document.getElementById('electionStatusBanner'); 
+                    let btnToggle = document.getElementById('btnElectionToggle');
                     
                     if(btnToggle) {
                         if(currentElectionStatus === 'OPEN') { btnToggle.innerText = 'ปิดระบบลงคะแนน'; btnToggle.style.background = '#D32F2F'; } 
                         else { btnToggle.innerText = 'เปิดระบบลงคะแนน'; btnToggle.style.background = '#00B900'; }
                     }
 
-                    if(d.myVote) { banner.innerHTML = `<i class="fa-solid fa-circle-check"></i> คุณได้ลงคะแนนให้ <b>เบอร์ ${d.myVote}</b> เรียบร้อยแล้ว`; banner.style.color = '#388E3C'; } 
-                    else if (currentElectionStatus === 'OPEN') { banner.innerHTML = `<i class="fa-solid fa-bullhorn"></i> เปิดหีบลงคะแนนแล้ว! (เลือก 1 เบอร์เท่านั้น)`; banner.style.color = 'var(--crimson-red)'; } 
-                    else { banner.innerHTML = `<i class="fa-solid fa-lock"></i> ระบบลงคะแนนยังไม่เปิด หรือ ปิดหีบเลือกตั้งแล้ว`; banner.style.color = '#888'; }
+                    if(d.myVote) { 
+                        banner.innerHTML = `<i class="fa-solid fa-circle-check"></i> คุณได้ลงคะแนนให้ <b>เบอร์ ${d.myVote}</b> เรียบร้อยแล้ว`; 
+                        banner.style.color = '#388E3C'; 
+                    } else if (currentElectionStatus === 'OPEN') { 
+                        banner.innerHTML = `<i class="fa-solid fa-bullhorn"></i> เปิดหีบลงคะแนนแล้ว! (เลือก 1 เบอร์เท่านั้น)`; 
+                        banner.style.color = 'var(--crimson-red)'; 
+                    } else { 
+                        banner.innerHTML = `<i class="fa-solid fa-lock"></i> ระบบลงคะแนนยังไม่เปิด หรือ ปิดหีบเลือกตั้งแล้ว`; 
+                        banner.style.color = '#888'; 
+                    }
 
                     const candCon = document.getElementById('dynamicCandidateContainer'); candCon.innerHTML = '';
                     if(d.candidates && d.candidates.length > 0) {
@@ -425,8 +481,14 @@
             if(confirm(`ยืนยันการลงคะแนนให้ เบอร์ ${number} (${name}) ใช่หรือไม่?\n(คำเตือน: ลงคะแนนแล้วจะไม่สามารถแก้ไขได้!)`)) {
                 showModal("กำลังบันทึก...", "กำลังส่งผลโหวตลงหีบ", "wait");
                 try {
-                    let p = new URLSearchParams(); p.append('action', 'submitVote'); p.append('studentId', currentStudentId); p.append('candidateNumber', number);
-                    let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json();
+                    let p = new URLSearchParams(); 
+                    p.append('action', 'submitVote'); 
+                    p.append('studentId', currentStudentId); 
+                    p.append('candidateNumber', number);
+                    
+                    let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); 
+                    let d = await res.json();
+                    
                     if(d.status === 'success') { showModal("ลงคะแนนสำเร็จ 🎉", d.message, "success"); loadElectionData(); } 
                     else { showModal("ผิดพลาด", d.message, "error"); }
                 } catch(e) { showModal("ล้มเหลว", "เชื่อมต่อไม่ได้", "error"); }
@@ -437,26 +499,59 @@
             let newStatus = currentElectionStatus === 'OPEN' ? 'CLOSED' : 'OPEN';
             if(confirm(`ต้องการ ${newStatus === 'OPEN' ? 'เปิด' : 'ปิด'} หีบรับลงคะแนนใช่หรือไม่?`)) {
                 let btn = document.getElementById('btnElectionToggle'); btn.disabled = true;
-                try { let p = new URLSearchParams(); p.append('action', 'setElectionStatus'); p.append('status', newStatus); await fetch(SCRIPT_URL, {method:'POST', body:p}); showModal("สำเร็จ", "อัปเดตสถานะเลือกตั้งแล้ว", "success"); loadElectionData(); } catch(e){}
+                try { 
+                    let p = new URLSearchParams(); 
+                    p.append('action', 'setElectionStatus'); 
+                    p.append('status', newStatus); 
+                    await fetch(SCRIPT_URL, {method:'POST', body:p}); 
+                    showModal("สำเร็จ", "อัปเดตสถานะเลือกตั้งแล้ว", "success"); 
+                    loadElectionData(); 
+                } catch(e){}
                 btn.disabled = false;
             }
         }
 
         async function addCandidate() {
-            const num = document.getElementById('admCandNum').value, name = document.getElementById('admCandName').value, pol = document.getElementById('admCandPolicy').value, btn = document.getElementById('btnUploadCand');
+            const num = document.getElementById('admCandNum').value;
+            const name = document.getElementById('admCandName').value;
+            const pol = document.getElementById('admCandPolicy').value;
+            const btn = document.getElementById('btnUploadCand');
+            
             if(!num || !name || !pol || !candBase64) return showModal("ไม่ครบ", "กรอกให้ครบทุกช่องและแนบรูป", "error");
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-            try { let p = new URLSearchParams(); p.append('action', 'addCandidate'); p.append('number', num); p.append('name', name); p.append('policy', pol); p.append('imageFile', candBase64); p.append('imageType', candImgType); await fetch(SCRIPT_URL, {method:'POST', body:p}); showModal("สำเร็จ", "เพิ่มผู้สมัครแล้ว", "success"); document.getElementById('admCandNum').value = ''; document.getElementById('admCandName').value = ''; document.getElementById('admCandPolicy').value = ''; document.getElementById('previewAdmCand').style.display = 'none'; candBase64 = ""; loadElectionData(); } catch(e){}
+            try { 
+                let p = new URLSearchParams(); 
+                p.append('action', 'addCandidate'); p.append('number', num); 
+                p.append('name', name); p.append('policy', pol); 
+                p.append('imageFile', candBase64); p.append('imageType', candImgType); 
+                await fetch(SCRIPT_URL, {method:'POST', body:p}); 
+                showModal("สำเร็จ", "เพิ่มผู้สมัครแล้ว", "success"); 
+                document.getElementById('admCandNum').value = ''; 
+                document.getElementById('admCandName').value = ''; 
+                document.getElementById('admCandPolicy').value = ''; 
+                document.getElementById('previewAdmCand').style.display = 'none'; 
+                candBase64 = ""; loadElectionData(); 
+            } catch(e){}
             btn.disabled = false; btn.innerHTML = 'เพิ่มรายชื่อผู้สมัคร';
         }
 
-        async function deleteCandidate(id) { if(confirm("ลบผู้สมัครรายนี้?")){ let p = new URLSearchParams(); p.append('action', 'deleteCandidate'); p.append('id', id); await fetch(SCRIPT_URL, {method:'POST', body:p}); loadElectionData(); } }
+        async function deleteCandidate(id) { 
+            if(confirm("ลบผู้สมัครรายนี้?")){ 
+                let p = new URLSearchParams(); 
+                p.append('action', 'deleteCandidate'); 
+                p.append('id', id); 
+                await fetch(SCRIPT_URL, {method:'POST', body:p}); 
+                loadElectionData(); 
+            } 
+        }
 
         async function viewElectionResults() {
-            document.getElementById('electionModal').style.display = 'flex'; document.getElementById('electionResultsContent').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังสรุปผลคะแนน...';
+            document.getElementById('electionModal').style.display = 'flex'; 
+            document.getElementById('electionResultsContent').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังสรุปผลคะแนน...';
             try {
                 let p = new URLSearchParams(); p.append('action', 'getElectionResults');
-                let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json();
+                let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); 
+                let d = await res.json();
                 if(d.status === 'success') {
                     let html = `<div style="text-align:center; font-size:18px; margin-bottom:15px;">รวมผู้มาใช้สิทธิ์: <b style="color:var(--crimson-red); font-size:24px;">${d.totalVotes}</b> คน</div>`;
                     if(d.results.length === 0) { html += `<p style="text-align:center;">ยังไม่มีผู้มาลงคะแนน</p>`; } 
@@ -471,24 +566,103 @@
             } catch(e){ document.getElementById('electionResultsContent').innerHTML = 'ดึงข้อมูลล้มเหลว'; }
         }
 
-        // ================= QR Code สแกนเช็คชื่อ =================
-        function openScanner(actId) { activeActivityId = actId; document.getElementById('scannerModal').style.display = 'flex'; html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: {width: 250, height: 250} }, false); html5QrcodeScanner.render(onScanSuccess, onScanFailure); }
-        function closeScanner() { document.getElementById('scannerModal').style.display = 'none'; if(html5QrcodeScanner) html5QrcodeScanner.clear(); }
-        async function onScanSuccess(decodedText, decodedResult) { closeScanner(); if(decodedText !== activeActivityId) return showModal("QR ไม่ถูกต้อง", "คิวอาร์โค้ดนี้ไม่ใช่ของกิจกรรมนี้ครับ", "error"); showModal("กำลังบันทึก...", "กำลังส่งข้อมูลเช็คชื่อ", "wait"); try { let p = new URLSearchParams(); p.append('action', 'checkInActivity'); p.append('studentId', currentStudentId); p.append('actId', activeActivityId); let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json(); if(d.status === 'success') showModal("เช็คชื่อสำเร็จ 🎉", d.message, "success"); else showModal("ผิดพลาด", d.message, "error"); } catch(e) { showModal("ล้มเหลว", "เชื่อมต่อไม่ได้", "error"); } }
-        function onScanFailure(error) {}
-        function showAdminQR(actId) { let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${actId}`; showModal("QR Code เช็คชื่อ", `<img src="${qrUrl}" style="width:100%; border-radius:15px; margin-top:10px;">`, "success"); }
-        async function viewSummary(actId) { document.getElementById('summaryModal').style.display = 'flex'; document.getElementById('summaryContent').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; try { let p = new URLSearchParams(); p.append('action', 'getAttendanceSummary'); p.append('actId', actId); let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json(); if(d.status === 'success') { let s = d.summary; let html = `<h3>รวม: <span style="color:red;">${s.total}</span> คน</h3><p>ชาย: ${s.male} | หญิง: ${s.female}</p><table class="summary-table"><tr><th>ระดับ/ห้อง</th><th>คน</th></tr>`; for(let r in s.rooms) { html += `<tr><td>${r}</td><td>${s.rooms[r]}</td></tr>`; } document.getElementById('summaryContent').innerHTML = html + `</table>`; } } catch(e) { document.getElementById('summaryContent').innerHTML = 'โหลดล้มเหลว'; } }
+        // ================= สมัครสมาชิก / ล็อกอิน / จัดการไฟล์ =================
+        function previewFile(inId, preId, t='user') { 
+            const f = document.getElementById(inId).files[0]; 
+            const p = document.getElementById(preId); 
+            const r = new FileReader(); 
+            r.onloadend = () => {
+                p.src = r.result; 
+                p.style.display = 'block'; 
+                let b = r.result.split(',')[1]; 
+                if(t === 'user'){ userBase64 = b; userImgType = f.type; } 
+                else if(t === 'team'){ teamBase64 = b; teamImgType = f.type; } 
+                else if(t === 'cand'){ candBase64 = b; candImgType = f.type; } 
+            }; 
+            if(f) r.readAsDataURL(f); 
+        }
 
-        // ================= สมัครสมาชิก / ล็อกอิน =================
-        function previewFile(inId, preId, t='user') { const f = document.getElementById(inId).files[0]; const p = document.getElementById(preId); const r = new FileReader(); r.onloadend=()=>{p.src=r.result; p.style.display='block'; let b=r.result.split(',')[1]; if(t==='user'){userBase64=b; userImgType=f.type;} else if(t==='team'){teamBase64=b; teamImgType=f.type;} else if(t==='cand'){candBase64=b; candImgType=f.type;} }; if(f) r.readAsDataURL(f); }
+        async function register() { 
+            const id = document.getElementById('regStudentId').value;
+            const name = document.getElementById('regName').value;
+            const dep = document.getElementById('regDepartment').value;
+            const gen = document.getElementById('regGender').value;
+            const lvl = document.getElementById('regLevel').value;
+            const rm = document.getElementById('regClassroom').value;
+            const btn = document.getElementById('registerBtn'); 
+            
+            if(!id||!name||!dep||!gen||!lvl||!rm||!userBase64) return showModal("ข้อมูลไม่ครบ", "กรอกให้ครบทุกช่อง", "error"); 
+            if(id.length !== 4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error"); 
+            
+            btn.disabled = true; btn.innerHTML = 'กำลังส่ง...'; 
+            try { 
+                let p = new URLSearchParams(); 
+                p.append('action','register'); p.append('studentId',id); p.append('name',name); p.append('department',dep); 
+                p.append('gender',gen); p.append('level',lvl); p.append('classroom',rm); 
+                p.append('imageFile',userBase64); p.append('imageType',userImgType); 
+                
+                let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); 
+                if(d.status === 'success'){
+                    showModal("สำเร็จ","รออนุมัติครับ","success"); 
+                    setTimeout(()=>{toggleAuthView('login'); closeModal();},3000);
+                } else showModal("ผิดพลาด",d.message,"error"); 
+            } catch(e){} 
+            btn.disabled = false; btn.innerHTML = 'ยืนยันสมัคร'; 
+        }
 
-        async function register() { const id = document.getElementById('regStudentId').value, name = document.getElementById('regName').value, dep = document.getElementById('regDepartment').value, gen = document.getElementById('regGender').value, lvl = document.getElementById('regLevel').value, rm = document.getElementById('regClassroom').value, btn = document.getElementById('registerBtn'); if(!id||!name||!dep||!gen||!lvl||!rm||!userBase64) return showModal("ข้อมูลไม่ครบ", "กรอกให้ครบทุกช่อง", "error"); if(id.length!==4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error"); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...'; try { let p = new URLSearchParams(); p.append('action','register'); p.append('studentId',id); p.append('name',name); p.append('department',dep); p.append('gender',gen); p.append('level',lvl); p.append('classroom',rm); p.append('imageFile',userBase64); p.append('imageType',userImgType); let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){showModal("สำเร็จ","รออนุมัติครับ","success"); setTimeout(()=>{toggleAuthView('login'); closeModal();},3000);} else showModal("ผิดพลาด",d.message,"error"); } catch(e){} btn.disabled = false; btn.innerHTML = 'ยืนยันสมัคร'; }
-        
-        async function login() { const id = document.getElementById('loginStudentId').value, btn = document.getElementById('loginBtn'); if(id.length!==4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error"); btn.disabled = true; btn.innerHTML = 'ตรวจสอบ...'; try { let p = new URLSearchParams(); p.append('action','login'); p.append('studentId',id); let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success') { currentStudentId = id; userRole = d.role; if(d.role==='admin'||d.role==='teacher'){ showModal("สวัสดี","แอดมิน","success"); setTimeout(()=>{closeModal();toggleAuthView('admin'); loadDynamicData();},1500); } else if(d.userStatus==='pending'){ showModal("รออนุมัติ","รออาจารย์อนุมัติ","wait"); } else { document.getElementById('f10_studentId').value=id; document.getElementById('f06_studentId').value=id; if(d.hasForm10&&d.hasForm06){ showModal("สำเร็จ","ยินดีต้อนรับ","success"); setTimeout(()=>{closeModal();document.getElementById('mainAuthContainer').style.display='none'; document.getElementById('mainAppBox').style.display=(window.innerWidth>=992?'flex':'block'); loadDynamicData(); switchMenu('home');},1500); } else { if(d.hasForm10){document.getElementById('btnForm10').disabled=true; document.getElementById('btnForm10').innerText='ส่งแล้ว';} if(d.hasForm06){document.getElementById('btnForm06').disabled=true; document.getElementById('btnForm06').innerText='ส่งแล้ว';} showModal("กรอกฟอร์ม","โปรดกรอกฟอร์มให้ครบ","info"); setTimeout(()=>{closeModal();toggleAuthView('dashboard');},1500); } } } else showModal("ไม่พบข้อมูล", d.message, "error"); } catch(e){} btn.disabled = false; btn.innerHTML = 'เข้าสู่ระบบ'; }
+        async function login() { 
+            const id = document.getElementById('loginStudentId').value;
+            const btn = document.getElementById('loginBtn'); 
+            
+            if(id.length !== 4) return showModal("ผิดพลาด", "รหัส 4 หลัก", "error"); 
+            btn.disabled = true; btn.innerHTML = 'ตรวจสอบ...'; 
+            
+            try { 
+                let p = new URLSearchParams(); p.append('action','login'); p.append('studentId',id); 
+                let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); 
+                
+                if(d.status === 'success') { 
+                    currentStudentId = id; userRole = d.role; 
+                    if(d.role === 'admin' || d.role === 'teacher'){ 
+                        showModal("สวัสดี","แอดมิน","success"); 
+                        setTimeout(()=>{closeModal();toggleAuthView('admin'); loadDynamicData();},1500); 
+                    } else if(d.userStatus === 'pending'){ 
+                        showModal("รออนุมัติ","รออาจารย์อนุมัติ","wait"); 
+                    } else { 
+                        document.getElementById('f10_studentId').value = id; 
+                        document.getElementById('f06_studentId').value = id; 
+                        if(d.hasForm10 && d.hasForm06){ 
+                            showModal("สำเร็จ","ยินดีต้อนรับ","success"); 
+                            setTimeout(()=>{closeModal();document.getElementById('mainAuthContainer').style.display='none'; document.getElementById('mainAppBox').style.display=(window.innerWidth>=992?'flex':'block'); loadDynamicData(); switchMenu('home');},1500); 
+                        } else { 
+                            if(d.hasForm10){document.getElementById('btnForm10').disabled=true; document.getElementById('btnForm10').innerText='ส่งแล้ว';} 
+                            if(d.hasForm06){document.getElementById('btnForm06').disabled=true; document.getElementById('btnForm06').innerText='ส่งแล้ว';} 
+                            showModal("กรอกฟอร์ม","โปรดกรอกฟอร์มให้ครบ","info"); setTimeout(()=>{closeModal();toggleAuthView('dashboard');},1500); 
+                        } 
+                    } 
+                } else showModal("ไม่พบข้อมูล", d.message, "error"); 
+            } catch(e){} 
+            btn.disabled = false; btn.innerHTML = 'เข้าสู่ระบบ'; 
+        }
 
         // ================= แบบฟอร์ม PDF =================
-        async function submitForm10() { let p = new URLSearchParams(); p.append('action', 'submitForm10'); p.append('studentId', currentStudentId); const fields = ['prefix','major','minor','level','dob_d','dob_m','dob_y','houseNo','soi','subdistrict','district','province','zipcode','phone']; for(let f of fields){ let v = document.getElementById('f10_'+f).value; if(!v) return showModal("ไม่ครบ", "กรอกให้ครบ", "error"); p.append(f==='prefix'?'prefix_name':f, v); } p.append('moo', document.getElementById('f10_moo').value||'-'); p.append('father', document.getElementById('f10_father').value||'-'); p.append('mother', document.getElementById('f10_mother').value||'-'); const btn = document.getElementById('btnSubmit10'); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...'; try { let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){ showModal("สำเร็จ","สร้างใบสมัคร ๑๐ แล้ว","success"); document.getElementById('btnForm10').disabled=true; document.getElementById('btnForm10').innerText='ส่งแล้ว'; setTimeout(()=>{closeModal();closeForm();},2000); } } catch(e){} btn.disabled = false; btn.innerHTML = 'ส่งใบสมัคร'; }
-        async function submitForm06() { let p = new URLSearchParams(); p.append('action', 'submitForm06'); p.append('studentId', currentStudentId); const fields = ['clubName','prefix','level','major','minor','dob_d','dob_m','dob_y','houseNo','soi','subdistrict','district','province','zipcode','phone']; for(let f of fields){ let v = document.getElementById('f06_'+f).value; if(!v) return showModal("ไม่ครบ", "กรอกให้ครบ", "error"); p.append(f==='prefix'?'prefix_name':f, v); } p.append('moo', document.getElementById('f06_moo').value||'-'); p.append('father', document.getElementById('f06_father').value||'-'); p.append('mother', document.getElementById('f06_mother').value||'-'); const btn = document.getElementById('btnSubmit06'); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...'; try { let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){ showModal("สำเร็จ","สร้างใบสมัคร ๐๖ แล้ว","success"); document.getElementById('btnForm06').disabled=true; document.getElementById('btnForm06').innerText='ส่งแล้ว'; setTimeout(()=>{closeModal();closeForm();},2000); } } catch(e){} btn.disabled = false; btn.innerHTML = 'ส่งใบสมัคร'; }
+        async function submitForm10() { 
+            let p = new URLSearchParams(); p.append('action', 'submitForm10'); p.append('studentId', currentStudentId); 
+            const fields = ['prefix','major','minor','level','dob_d','dob_m','dob_y','houseNo','soi','subdistrict','district','province','zipcode','phone']; 
+            for(let f of fields){ let v = document.getElementById('f10_'+f).value; if(!v) return showModal("ไม่ครบ", "กรอกให้ครบ", "error"); p.append(f==='prefix'?'prefix_name':f, v); } 
+            p.append('moo', document.getElementById('f10_moo').value||'-'); p.append('father', document.getElementById('f10_father').value||'-'); p.append('mother', document.getElementById('f10_mother').value||'-'); 
+            const btn = document.getElementById('btnSubmit10'); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...'; 
+            try { let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){ showModal("สำเร็จ","สร้างใบสมัคร ๑๐ แล้ว","success"); document.getElementById('btnForm10').disabled=true; document.getElementById('btnForm10').innerText='ส่งแล้ว'; setTimeout(()=>{closeModal();closeForm();},2000); } } catch(e){} btn.disabled = false; btn.innerHTML = 'ส่งใบสมัคร'; 
+        }
+
+        async function submitForm06() { 
+            let p = new URLSearchParams(); p.append('action', 'submitForm06'); p.append('studentId', currentStudentId); 
+            const fields = ['clubName','prefix','level','major','minor','dob_d','dob_m','dob_y','houseNo','soi','subdistrict','district','province','zipcode','phone']; 
+            for(let f of fields){ let v = document.getElementById('f06_'+f).value; if(!v) return showModal("ไม่ครบ", "กรอกให้ครบ", "error"); p.append(f==='prefix'?'prefix_name':f, v); } 
+            p.append('moo', document.getElementById('f06_moo').value||'-'); p.append('father', document.getElementById('f06_father').value||'-'); p.append('mother', document.getElementById('f06_mother').value||'-'); 
+            const btn = document.getElementById('btnSubmit06'); btn.disabled = true; btn.innerHTML = 'กำลังส่ง...'; 
+            try { let res = await fetch(SCRIPT_URL, {method:'POST',body:p}); let d = await res.json(); if(d.status==='success'){ showModal("สำเร็จ","สร้างใบสมัคร ๐๖ แล้ว","success"); document.getElementById('btnForm06').disabled=true; document.getElementById('btnForm06').innerText='ส่งแล้ว'; setTimeout(()=>{closeModal();closeForm();},2000); } } catch(e){} btn.disabled = false; btn.innerHTML = 'ส่งใบสมัคร'; 
+        }
 
         // ================= จัดการแอดมิน =================
         function previewAdmMultipleFeeds() { const files = document.getElementById('admFeedImage').files; const b = document.getElementById('previewGalleryBox'); b.innerHTML=''; admFeedImagesArray=[]; Array.from(files).forEach((f)=>{const r=new FileReader(); r.onloadend=()=>{b.innerHTML+=`<img src="${r.result}">`; admFeedImagesArray.push({base64:r.result.split(',')[1], type:f.type});}; if(f) r.readAsDataURL(f);}); }
@@ -509,7 +683,14 @@
         function enterMainAppAsAdmin() { document.getElementById('mainAuthContainer').style.display='none'; document.getElementById('mainAppBox').style.display=(window.innerWidth>=992?'flex':'block'); document.getElementById('menu-admin-back').style.display='flex'; loadDynamicData(); switchMenu('home'); }
         function backToAdminPanel() { document.getElementById('mainAppBox').style.display='none'; document.getElementById('mainAuthContainer').style.display='block'; toggleAuthView('admin'); }
 
-        // ================= สลับหน้า UI =================
+        // ================= QR Code & UI Helpers =================
+        function openScanner(actId) { activeActivityId = actId; document.getElementById('scannerModal').style.display = 'flex'; html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: {width: 250, height: 250} }, false); html5QrcodeScanner.render(onScanSuccess, onScanFailure); }
+        function closeScanner() { document.getElementById('scannerModal').style.display = 'none'; if(html5QrcodeScanner) html5QrcodeScanner.clear(); }
+        async function onScanSuccess(decodedText, decodedResult) { closeScanner(); if(decodedText !== activeActivityId) return showModal("QR ไม่ถูกต้อง", "คิวอาร์โค้ดนี้ไม่ใช่ของกิจกรรมนี้ครับ", "error"); showModal("กำลังบันทึก...", "กำลังส่งข้อมูลเช็คชื่อ", "wait"); try { let p = new URLSearchParams(); p.append('action', 'checkInActivity'); p.append('studentId', currentStudentId); p.append('actId', activeActivityId); let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json(); if(d.status === 'success') showModal("เช็คชื่อสำเร็จ 🎉", d.message, "success"); else showModal("ผิดพลาด", d.message, "error"); } catch(e) { showModal("ล้มเหลว", "เชื่อมต่อไม่ได้", "error"); } }
+        function onScanFailure(error) {}
+        function showAdminQR(actId) { let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${actId}`; showModal("QR Code เช็คชื่อ", `<img src="${qrUrl}" style="width:100%; border-radius:15px; margin-top:10px;">`, "success"); }
+        async function viewSummary(actId) { document.getElementById('summaryModal').style.display = 'flex'; document.getElementById('summaryContent').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; try { let p = new URLSearchParams(); p.append('action', 'getAttendanceSummary'); p.append('actId', actId); let res = await fetch(SCRIPT_URL, {method:'POST', body:p}); let d = await res.json(); if(d.status === 'success') { let s = d.summary; let html = `<h3>รวม: <span style="color:red;">${s.total}</span> คน</h3><p>ชาย: ${s.male} | หญิง: ${s.female}</p><table class="summary-table"><tr><th>ระดับ/ห้อง</th><th>คน</th></tr>`; for(let r in s.rooms) { html += `<tr><td>${r}</td><td>${s.rooms[r]}</td></tr>`; } document.getElementById('summaryContent').innerHTML = html + `</table>`; } } catch(e) { document.getElementById('summaryContent').innerHTML = 'โหลดล้มเหลว'; } }
+
         function toggleAuthView(v) { document.querySelectorAll('.login-container, .register-container, .dashboard-container, .admin-container').forEach(el=>el.style.display='none'); document.getElementById(v+'Box').style.display='block'; }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
         function switchMenu(m) { document.querySelectorAll('#view-election,#view-today,#view-home,#view-upcoming,#view-team,#view-contact').forEach(el=>el.style.display='none'); document.querySelectorAll('.sidebar-menu li').forEach(li=>li.classList.remove('active-menu')); document.getElementById('view-'+m).style.display='block'; document.getElementById('menu-'+m).classList.add('active-menu'); if(window.innerWidth<992) toggleSidebar(); window.scrollTo(0,0); if(m==='election') loadElectionData(); }
