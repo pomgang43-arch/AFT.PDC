@@ -346,6 +346,13 @@
     <div class="modal-overlay-detail" id="summaryModal"><div class="modal-box modal-box-detail" style="max-width: 500px;"><h2 class="modal-title">สรุปยอดผู้เข้าร่วม</h2><div id="summaryContent" style="margin-top: 15px; text-align: center;">กำลังโหลดข้อมูล...</div><button class="btn-close" onclick="document.getElementById('summaryModal').style.display='none'">ปิดหน้าต่าง</button></div></div>
     
     <div class="modal-overlay-detail" id="electionModal"><div class="modal-box modal-box-detail" style="max-width: 500px;"><h2 class="modal-title"><i class="fa-solid fa-chart-column"></i> สรุปผลการเลือกตั้ง</h2><div id="electionResultsContent" style="margin-top: 15px; text-align: left;">กำลังโหลดผลคะแนน...</div><button class="btn-close" onclick="document.getElementById('electionModal').style.display='none'">ปิดหน้าต่าง</button></div></div>
+    <!-- 🌟 กล่องซูมรูปภาพแบบเต็มจอ (เพิ่มใหม่) 🌟 -->
+    <div class="modal-overlay-alert" id="imageViewerModal" style="z-index: 10000; display: none;" onclick="closeImageViewer()">
+        <div style="position: relative; max-width: 95%; max-height: 95vh; display: flex; justify-content: center; align-items: center;">
+            <img id="fullSizeImage" src="" style="max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <button onclick="closeImageViewer()" style="position: absolute; top: -15px; right: -15px; background: var(--crimson-red); color: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-size: 16px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">X</button>
+        </div>
+    </div>
     <script>
         // 🚨 SCRIPT_URL นี้ถูกตั้งค่าให้ตรงกับของคุณเรียบร้อยแล้ว 🚨
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRoxGlVcEfOmgtqHjx98rWpqiCz4oUC6XcyaSv9by5qfemA96S9BOXAW7msTXkqCBf/exec";
@@ -720,8 +727,24 @@ async function login() {
         function openForm(id) { document.getElementById('mainAuthContainer').style.display='none'; document.getElementById(id+'Box').style.display='block'; window.scrollTo(0,0); }
         function closeForm() { document.querySelectorAll('.form-container').forEach(e=>e.style.display='none'); document.getElementById('mainAuthContainer').style.display='block'; }
         function logout() { currentStudentId=""; userRole="student"; document.querySelectorAll('#mainAppBox, .form-container').forEach(e=>e.style.display='none'); document.getElementById('mainAuthContainer').style.display='block'; toggleAuthView('login'); document.getElementById('loginStudentId').value=''; }
-        function openFeedDetail(id) { let f=globalFeedsData.find(x=>x.id==id); if(f){document.getElementById('fdTitle').innerText=f.title; document.getElementById('fdDesc').innerText=f.desc; let g=document.getElementById('fdGallery'); g.innerHTML=''; f.imgs.forEach(i=>g.innerHTML+=`<img src="${i}" onclick="window.open('${i}','_blank')">`); document.getElementById('feedDetailModal').style.display='flex';} }
+        
+        // 🌟 ส่วนที่แก้ไขใหม่: ดูรูปภาพในแอป ไม่เด้งไป Google Drive 🌟
+        function openFeedDetail(id) { 
+            let f = globalFeedsData.find(x => x.id == id); 
+            if(f){
+                document.getElementById('fdTitle').innerText = f.title; 
+                document.getElementById('fdDesc').innerText = f.desc; 
+                let g = document.getElementById('fdGallery'); 
+                g.innerHTML = ''; 
+                f.imgs.forEach(i => g.innerHTML += `<img src="${i}" onclick="viewImageFull('${i}')" style="cursor: zoom-in;">`); 
+                document.getElementById('feedDetailModal').style.display = 'flex';
+            } 
+        }
         function closeFeedDetail() { document.getElementById('feedDetailModal').style.display='none'; }
+        function viewImageFull(src) { document.getElementById('fullSizeImage').src = src; document.getElementById('imageViewerModal').style.display = 'flex'; }
+        function closeImageViewer() { document.getElementById('imageViewerModal').style.display = 'none'; document.getElementById('fullSizeImage').src = ''; }
+        
+        // Modal แจ้งเตือนทั่วไป
         function showModal(t,d,type='info') { document.getElementById('modalTitle').innerText=t; document.getElementById('modalDesc').innerText=d; document.getElementById('myModal').style.display='flex'; }
         function closeModal() { document.getElementById('myModal').style.display='none'; }
     </script>
